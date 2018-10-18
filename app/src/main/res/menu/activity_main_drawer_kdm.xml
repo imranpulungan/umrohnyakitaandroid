@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="Profil" />
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Grup Binaan" />
+
+        <item
+            android:id="@+id/nav_share_kdm"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Grup Binaan KDM" />
+
+        <item
+            android:id="@+id/nav_jamaah"
+            android:icon="@drawable/ic_menu_jamaah"
+            android:title="Jamaah" />
+
+        <item
+            android:id="@+id/nav_jamaah_data"
+            android:title="Data Jamaah"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_jamaah_history"
+            android:title="History Jamaah"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/nav_commision"
+            android:icon="@drawable/ic_menu_commission"
+            android:title="Komisi" />
+
+        <item
+            android:id="@+id/nav_commission_kdm"
+            android:title="Komisi KDM"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_commission_vice"
+            android:title="Komisi Perwakilan"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_commission_paid_off"
+            android:title="Komisi Pelunasan"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_commision_PSC"
+            android:title="Komisi PSC"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/nav_PPC"
+            android:icon="@drawable/ic_menu_ppc"
+            android:title="PPC" />
+
+        <item
+            android:id="@+id/nav_bill"
+            android:icon="@drawable/ic_menu_bill"
+            android:title="Kwitansi" />
+
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/ic_menu_cart"
+            android:title="Pembelian Paket" />
+
+        <item
+            android:id="@+id/nav_reward"
+            android:icon="@drawable/ic_menu_reward"
+            android:title="Reward" />
+
+        <item
+            android:id="@+id/nav_facilities"
+            android:icon="@drawable/ic_menu_facilities"
+            android:title="Fasilitas" />
+
+        <item
+            android:id="@+id/nav_insentif"
+            android:icon="@drawable/ic_menu_insentif"
+            android:title="Insentif" />
+    </group>
+
+</menu>

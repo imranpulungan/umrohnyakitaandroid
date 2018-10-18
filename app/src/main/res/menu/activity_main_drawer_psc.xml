@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_menu_dashboard"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/nav_data_perwakilan"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Perwakilan" />
+        <item
+            android:id="@+id/nav_data_asper"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Asper" />
+        <item
+            android:id="@+id/nav_data_kwitansi"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Kwitansi" />
+        <item
+            android:id="@+id/nav_data_kwitansi_perwakilan"
+            android:title="Untuk Perwakilan"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_data_kwitansi_jamaah"
+            android:title="Untuk Jamaah"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_kwitansi_free"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Kwitansi Free" />
+
+        <item
+            android:id="@+id/nav_pembelian_stok"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Pembelian Stok" />
+
+        <item
+            android:id="@+id/nav_penjualan"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Penjualan" />
+
+        <item
+            android:id="@+id/nav_data_referal"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Referal" />
+
+        <item
+            android:id="@+id/nav_reward"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Reward" />
+
+        <item
+            android:id="@+id/nav_komisi"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Data Komisi" />
+
+        <item
+            android:id="@+id/nav_laporan"
+            android:icon="@drawable/ic_adjust_black_24dp"
+            android:title="Laporan" />
+    </group>
+
+</menu>

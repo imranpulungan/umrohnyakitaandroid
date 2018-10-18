@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_data_pemberian"
+            android:icon="@null"
+            android:title="Data Pemberian Kwitansi" />
+        <item
+            android:id="@+id/nav_beri"
+            android:icon="@null"
+            android:title="Beri Kwitansi" />
+    </group>
+
+</menu>
