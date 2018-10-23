@@ -98,6 +98,7 @@ public class PSCJualKwitansiFragment extends AppFragment implements iPresenterRe
         switch (item.getItemId()){
             case R.id.nav_jual_kwitansi:
                 Intent intent = new Intent(getContext(), PSCJualKwitansiActivity.class);
+                intent.putExtra("id", Integer.valueOf(dataUser.id_perwakilan));
                 startActivity(intent);
                 return true;
         }

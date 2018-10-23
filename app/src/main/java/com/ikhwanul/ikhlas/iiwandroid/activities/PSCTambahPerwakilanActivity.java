@@ -75,6 +75,7 @@ public class PSCTambahPerwakilanActivity extends AppActivity implements iPresent
                         mEditPekerjaan, mEditJabatan, mEditTerdaftar, mEditUsername;
 
     DataFormPresenter mPresenter;
+    CalonPerwakilanResponse.DataCalon dataCalon;
 
     int id_perwakilan;
     public PSCTambahPerwakilanActivity() {
@@ -85,10 +86,10 @@ public class PSCTambahPerwakilanActivity extends AppActivity implements iPresent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Tambah Perwakilan");
-        id_perwakilan = getIntent().getIntExtra("id", 0);
+        id_perwakilan = getIntent().getIntExtra("id_psc", 0);
         initView();
-        initEvent();
         initObject();
+        initEvent();
     }
 
     private void initView() {
@@ -201,34 +202,33 @@ public class PSCTambahPerwakilanActivity extends AppActivity implements iPresent
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, RequestBody> dataAdd = new HashMap<>();
+                Map<String, String> dataAdd = new HashMap<>();
 //                dataAdd.put("id_perwakilan", );
 
 //                dataAdd.put("kode", toRequestBody(String.valueOf()));
-                dataAdd.put("nik", toRequestBody(String.valueOf(mEditNIK.getText())));
-                dataAdd.put("nama_lengkap", toRequestBody(String.valueOf(mEditNamaLengkap.getText())));
-                dataAdd.put("tempat_lahir", toRequestBody(String.valueOf(mEditTempatLahir.getText())));
-                dataAdd.put("tanggal_lahir", toRequestBody(String.valueOf(mEditTanggalLahir.getText())));
-                dataAdd.put("jenis_kelamin", toRequestBody(String.valueOf(mSpinnerGender.getSelectedItem())));
-                dataAdd.put("gol_darah", toRequestBody(String.valueOf(mSpinnerGoldarah.getSelectedItem())));
-                dataAdd.put("alamat", toRequestBody(String.valueOf(mEditAlamat.getText())));
-                dataAdd.put("kabupaten", toRequestBody(String.valueOf(mSpinnerKabupaten.getSelectedItem())));
-                dataAdd.put("agama", toRequestBody(String.valueOf(mSpinnerReligion.getSelectedItem())));
-                dataAdd.put("status_perkawinan", toRequestBody(String.valueOf(mSpinnerPerkawinan.getSelectedItem())));
-                dataAdd.put("pekerjaan", toRequestBody(String.valueOf(mEditPekerjaan.getText())));
-                dataAdd.put("kewarganegaraan", toRequestBody(String.valueOf(mSpinnerNasionality.getSelectedItem())));
-                dataAdd.put("no_telpon", toRequestBody(String.valueOf(mEditNoHp.getText())));
-                dataAdd.put("email", toRequestBody(String.valueOf(mEditEmail.getText())));
-                dataAdd.put("perekomendasi", toRequestBody(String.valueOf(mEditPerekomendasi.getText())));
-                dataAdd.put("id_perwakilan", toRequestBody(String.valueOf(id_perwakilan)));
-                dataAdd.put("terdaftar", toRequestBody(String.valueOf(mEditTerdaftar.getText())));
-                dataAdd.put("username", toRequestBody(String.valueOf(mEditUsername.getText())));
-                dataAdd.put("status", toRequestBody(String.valueOf(1)));
-                dataAdd.put("jabatan", toRequestBody(String.valueOf(mEditJabatan.getText())));
+                dataAdd.put("nik", mEditNIK.getText().toString());
+                dataAdd.put("nama_lengkap", mEditNamaLengkap.getText().toString());
+                dataAdd.put("tempat_lahir", mEditTempatLahir.getText().toString());
+                dataAdd.put("tanggal_lahir", mEditTanggalLahir.getText().toString());
+                dataAdd.put("jenis_kelamin", mSpinnerGender.getSelectedItem().toString());
+                dataAdd.put("gol_darah", mSpinnerGoldarah.getSelectedItem().toString());
+                dataAdd.put("alamat", mEditAlamat.getText().toString());
+                dataAdd.put("kabupaten", String.valueOf(dataKabupaten.get(mSpinnerKabupaten.getSelectedItemPosition()).id_kabupaten));
+                dataAdd.put("agama", String.valueOf(1));
+                dataAdd.put("status_perkawinan", mSpinnerPerkawinan.getSelectedItem().equals("Pria")?"L":"P");
+                dataAdd.put("pekerjaan", mEditPekerjaan.getText().toString());
+                dataAdd.put("kewarganegaraan", mSpinnerNasionality.getSelectedItem().toString());
+                dataAdd.put("no_telpon", mEditNoHp.getText().toString());
+                dataAdd.put("email", mEditEmail.getText().toString());
+                dataAdd.put("perekomendasi", dataCalon.id_perekomendasi);
+                dataAdd.put("id_perwakilan", String.valueOf(id_perwakilan));
+                dataAdd.put("terdaftar", mEditTerdaftar.getText().toString());
+                dataAdd.put("berakhir", mEditAkhirKontrak.getText().toString());
+                dataAdd.put("username", mEditUsername.getText().toString());
+                dataAdd.put("status", String.valueOf(1));
+                dataAdd.put("jabatan", mEditJabatan.getText().toString());
 
                 mPresenter.addNewPerwakilan(dataAdd);
-                Log.d("POST", dataAdd.toString());
-                Toast.makeText(PSCTambahPerwakilanActivity.this, "CLICKED", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -261,7 +261,7 @@ public class PSCTambahPerwakilanActivity extends AppActivity implements iPresent
     private void initObject() {
         mPresenter = new DataFormPresenter(PSCTambahPerwakilanActivity.this, this);
         mPresenter.getProvinsi();
-        mPresenter.generateCalonPerwakilan();
+        mPresenter.generateCalonPerwakilan(id_perwakilan);
     }
 
     @Override
@@ -285,12 +285,13 @@ public class PSCTambahPerwakilanActivity extends AppActivity implements iPresent
             }
         }else if(tag.equals(Presenter.RES_GET_GENERATE_PERWAKILAN)){
             if (!response.error){
-                CalonPerwakilanResponse.DataCalon resp = ((CalonPerwakilanResponse) response).data;
-                mEditUsername.setText(resp.username);
-                mEditJabatan.setText(resp.jabatan);
-                mEditAkhirKontrak.setText(resp.kontrak);
-                mEditTerdaftar.setText(resp.today);
-                if ((resp.perigkat <= 5 && resp.perigkat < 6)){
+                dataCalon = ((CalonPerwakilanResponse) response).data;
+
+                mEditUsername.setText(dataCalon.username);
+                mEditJabatan.setText(dataCalon.jabatan);
+                mEditAkhirKontrak.setText(dataCalon.kontrak);
+                mEditTerdaftar.setText(dataCalon.today);
+                if ((dataCalon.perigkat >= 5 && dataCalon.perigkat < 6)){
                     layoutPerekomendasi.setVisibility(View.GONE);
                     layoutNIK.setVisibility(View.GONE);
                     layoutTempatLahir.setVisibility(View.GONE);
@@ -303,7 +304,10 @@ public class PSCTambahPerwakilanActivity extends AppActivity implements iPresent
                 }
             }
         }else if(tag.equals(Presenter.ADD_NEW_PERWAKILAN)){
-
+            if(!response.error){
+                Toast.makeText(this, "Tambah Perwakilan Berhasil!", Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
         }
 
     }

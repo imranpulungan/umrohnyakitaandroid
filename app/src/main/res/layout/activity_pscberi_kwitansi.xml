@@ -12,103 +12,114 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Beri Kwintasi Free ke Perwakilan"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:padding="10dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color1"/>
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Beri Kwintasi Free ke Perwakilan"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:padding="10dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color1"/>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="10dp">
-                        <TextView
-                            android:padding="5dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Kode Perwakilan" />
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edit_nama_lengkap_kerabat"
-                            android:hint="Kode Perwakilan"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:background="@drawable/background_with_radius_border1" />
+                            android:orientation="vertical"
+                            android:layout_margin="5dp">
+                            <TextView
+                                android:id="@+id/tv_kode_or_id"
+                                android:padding="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Kode Perwakilan" />
+
+                            <EditText
+                                android:id="@+id/edit_kode_perwakilan"
+                                android:hint="Kode Perwakilan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:background="@drawable/background_with_radius_border1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp">
+                            <TextView
+                                android:padding="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah Kwitansi" />
+
+                            <EditText
+                                android:id="@+id/edit_jlh_kwitansi"
+                                android:hint="Jumlah Kwitansi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:inputType="number"
+                                android:background="@drawable/background_with_radius_border1" />
+                            <TextView
+                                android:id="@+id/tv_my_stock"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="Jumlah Kwitansi anda"
+                                android:padding="5dp"
+                                android:textStyle="bold|italic"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp">
+                            <TextView
+                                android:padding="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Keterangan" />
+
+                            <EditText
+                                android:id="@+id/edit_keterangan"
+                                android:hint="Keterangan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:background="@drawable/background_with_radius_border1"
+                                android:lines="5"
+                                android:gravity="top"/>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_save"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:textStyle="bold"
+                            android:background="@drawable/background_with_radius2"
+                            android:textColor="#fff"
+                            android:text="Simpan"/>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="10dp">
-                        <TextView
-                            android:padding="5dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Jumlah Kwitansi" />
-
-                        <EditText
-                            android:id="@+id/edit_jlh_kwitansi"
-                            android:hint="Jumlah Kwitansi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:background="@drawable/background_with_radius_border1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="10dp">
-                        <TextView
-                            android:padding="5dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Keterangan" />
-
-                        <EditText
-                            android:id="@+id/edit_keterangan"
-                            android:hint="Keterangan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:background="@drawable/background_with_radius_border1"
-                            android:lines="5"
-                            android:gravity="top"/>
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btn_save"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:textStyle="bold"
-                        android:background="@drawable/background_with_radius2"
-                        android:textColor="#fff"
-                        android:text="Simpan"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
         </LinearLayout>
 
     </ScrollView>

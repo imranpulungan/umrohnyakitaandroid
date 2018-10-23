@@ -57,6 +57,7 @@ public class PSCDataPenjualanKwitansiAdapter extends
         holder.textNameItem.setText(dataPerwakilan.getData_saya_nama());
         holder.textRekomendasi.setText(dataPerwakilan.getKeterangan());
         holder.textKontrakAkhir.setText(dataPerwakilan.getTgl_dibuat());
+        holder.textStatus.setVisibility(View.GONE);
     }
 
     public void filter(String charText) {

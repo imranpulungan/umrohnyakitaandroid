@@ -59,11 +59,11 @@ public class KomisiKDMAdapter extends
         final KomisiKDM_MM dataKomisi = komisiKDMList.get(position);
 
         holder.tvIdKomisi.setText(dataKomisi.getId_komisi());
-//        holder.tvTipeKomisi.setText(dataKomisi.getTipe().equals("1")? "Rekomendasi" : "Stok");
-//        holder.tvKeterangan.setText(dataKomisi.getKeterangan());
+        holder.tvKeterangan.setText(dataKomisi.getKeterangan());
         holder.tvJumlah.setText(FormatRupiah.useFormat(dataKomisi.getJumlah()));
         holder.tvTanggalKomisi.setText(dataKomisi.getTgl_dibuat());
-        holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diclaim": "Belum diclaim");
+        holder.tvStatusKomisi.setText(dataKomisi.getStatus());
+        holder.tvTipeKomisi.setVisibility(View.GONE);
     }
 
     public void filter(String charText) {

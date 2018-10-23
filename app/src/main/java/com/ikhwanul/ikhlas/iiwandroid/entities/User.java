@@ -19,5 +19,6 @@ public class User implements Serializable {
     public String tgl_berakhir;
     public String peringkat;
     public String foto;
+    public String pass_de;
     public String remember_token;
 }

@@ -58,8 +58,8 @@ public class PSCKwitansiPerwakilanAdapter extends
         holder.textIdItem.setText(dataPerwakilan.getNo_kwitansi());
         holder.textNameItem.setText(dataPerwakilan.getNo_transaksi());
         holder.textRekomendasi.setText(dataPerwakilan.getUntuk());
-        holder.textKontrakAkhir.setText(dataPerwakilan.getGuna());
-        holder.textStatus.setText(dataPerwakilan.getStatus());
+        holder.textStatus.setText(dataPerwakilan.getGuna());
+        holder.textKontrakAkhir.setText(dataPerwakilan.getStatus());
     }
 
     public void filter(String charText) {

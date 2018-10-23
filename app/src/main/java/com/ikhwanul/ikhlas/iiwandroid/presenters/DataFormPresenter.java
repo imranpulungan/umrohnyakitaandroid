@@ -6,6 +6,7 @@ import com.ikhwanul.ikhlas.iiwandroid.MainActivity;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.api.ApiClient;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.CalonPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.JamaahResponse;
@@ -190,8 +191,32 @@ public class DataFormPresenter extends Presenter {
         });
     }
 
-    public void generateCalonPerwakilan() {
-        ApiClient.getInstance(context).getApi().generatePerwakilan().enqueue(new Callback<CalonPerwakilanResponse>() {
+    public void shareKwitansi(Map<String, String> data) {
+        ApiClient.getInstance(context).getApi().shareKwitansi(data).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        presenterresponse.doSuccess(response.body(), SHARE_KWITANSI);
+                    }else{
+                        handleError(response.errorBody(), response.code());
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                DataFormPresenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void generateCalonPerwakilan(int id_perwakilan) {
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        data.put("id_perwakilan", id_perwakilan);
+        ApiClient.getInstance(context).getApi().generatePerwakilan(data).enqueue(new Callback<CalonPerwakilanResponse>() {
             @Override
             public void onResponse(Call<CalonPerwakilanResponse> call, Response<CalonPerwakilanResponse> response) {
                 try {
@@ -212,7 +237,7 @@ public class DataFormPresenter extends Presenter {
         });
     }
 
-    public void addNewPerwakilan(Map<String, RequestBody> dataAdd) {
+    public void addNewPerwakilan(Map<String, String> dataAdd) {
 
         ApiClient.getInstance(context).getApi().addNewPerwakilan(dataAdd).enqueue(new Callback<ApiResponse>() {
             @Override
@@ -230,6 +255,74 @@ public class DataFormPresenter extends Presenter {
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
+                DataFormPresenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getStokkwitansi(int id) {
+        Map<String, Integer> data = new HashMap<>();
+        data.put("id_perwakilan", id);
+        ApiClient.getInstance(context).getApi().getStokkwitansi(data).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        presenterresponse.doSuccess(response.body(), GET_STOK_KWITANSI);
+                    }else{
+                        handleError(response.errorBody(), response.code());
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                DataFormPresenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void sellKwitansi(Map<String, String> data) {
+        ApiClient.getInstance(context).getApi().sellKwitansi(data).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        presenterresponse.doSuccess(response.body(), SELL_KWITANSI);
+                    }else{
+                        handleError(response.errorBody(), response.code());
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                DataFormPresenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void updateProfilePerwakilan(Map<String, String> data) {
+        ApiClient.getInstance(context).getApi().updateProfilePerwakilan(data).enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        presenterresponse.doSuccess(response.body(), UPDATE_PROFILE_PERWAKILAN);
+                    }else{
+                        handleError(response.errorBody(), response.code());
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
                 DataFormPresenter.this.onFailure(t);
             }
         });

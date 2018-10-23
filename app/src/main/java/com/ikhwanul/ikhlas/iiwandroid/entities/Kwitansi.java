@@ -3,30 +3,10 @@ package com.ikhwanul.ikhlas.iiwandroid.entities;
 import java.io.Serializable;
 
 public class Kwitansi implements Serializable{
-    private String id_pembelian;
-    private String id_perwakilan;
     private String no_transaksi;
-    private String jumlah_stock;
-    private String no_kwintansi;
-    private String keterangan;
-    private String tgl_dibuat;
-    private String status;
-
-    public String getId_pembelian() {
-        return id_pembelian;
-    }
-
-    public void setId_pembelian(String id_pembelian) {
-        this.id_pembelian = id_pembelian;
-    }
-
-    public String getId_perwakilan() {
-        return id_perwakilan;
-    }
-
-    public void setId_perwakilan(String id_perwakilan) {
-        this.id_perwakilan = id_perwakilan;
-    }
+    private String no_kwitansi;
+    private String status_guna;
+    private String jenis_kwitansi;
 
     public String getNo_transaksi() {
         return no_transaksi;
@@ -36,43 +16,27 @@ public class Kwitansi implements Serializable{
         this.no_transaksi = no_transaksi;
     }
 
-    public String getJumlah_stock() {
-        return jumlah_stock;
+    public String getNo_kwitansi() {
+        return no_kwitansi;
     }
 
-    public void setJumlah_stock(String jumlah_stock) {
-        this.jumlah_stock = jumlah_stock;
+    public void setNo_kwitansi(String no_kwitansi) {
+        this.no_kwitansi = no_kwitansi;
     }
 
-    public String getNo_kwintansi() {
-        return no_kwintansi;
+    public String getStatus_guna() {
+        return status_guna;
     }
 
-    public void setNo_kwintansi(String no_kwintansi) {
-        this.no_kwintansi = no_kwintansi;
+    public void setStatus_guna(String status_guna) {
+        this.status_guna = status_guna;
     }
 
-    public String getKeterangan() {
-        return keterangan;
+    public String getJenis_kwitansi() {
+        return jenis_kwitansi;
     }
 
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
-    }
-
-    public String getTgl_dibuat() {
-        return tgl_dibuat;
-    }
-
-    public void setTgl_dibuat(String tgl_dibuat) {
-        this.tgl_dibuat = tgl_dibuat;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setJenis_kwitansi(String jenis_kwitansi) {
+        this.jenis_kwitansi = jenis_kwitansi;
     }
 }

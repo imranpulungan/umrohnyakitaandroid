@@ -74,7 +74,7 @@ public class PSCDataPerwakilanAdapter extends
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PSCDetailPerwakilanActivity.class);
-                intent.putExtra("id", dataPerwakilan.getId_perwakilan());
+                intent.putExtra("id", Integer.valueOf(dataPerwakilan.getId_perwakilan()));
                 context.startActivity(intent);
 
             }

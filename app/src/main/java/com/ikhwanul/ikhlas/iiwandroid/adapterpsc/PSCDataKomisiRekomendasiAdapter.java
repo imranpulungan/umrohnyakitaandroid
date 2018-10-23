@@ -57,6 +57,7 @@ public class PSCDataKomisiRekomendasiAdapter extends
         holder.textNameItem.setText(dataPerwakilan.getJumlah());
         holder.textRekomendasi.setText(dataPerwakilan.getKeterangan());
         holder.textKontrakAkhir.setText(dataPerwakilan.getBln_tahun());
+        holder.textStatus.setText(dataPerwakilan.getStatus());
     }
 
     public void filter(String charText) {

@@ -2,20 +2,25 @@ package com.ikhwanul.ikhlas.iiwandroid.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.ikhwanul.ikhlas.iiwandroid.BuildConfig;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.DetailJamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.core.AppActivity;
+import com.ikhwanul.ikhlas.iiwandroid.entities.DetailJamaah;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.DataFormPresenter;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.iPresenterResponse;
 import com.ikhwanul.ikhlas.iiwandroid.ui.ImagePickerFragment;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,10 +30,13 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 import static com.ikhwanul.ikhlas.iiwandroid.activities.RegistrationRegulerActivity.randomAlphaNumeric;
+import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.RES_GET_DETAIL_JAMAAH;
 
 public class DetailJamaahActivity extends AppActivity implements iPresenterResponse {
 
     private Jamaah dataJamaah;
+    DetailJamaah detailJamaah;
+
     private EditText mEditGrupKeberangkatan;
     private EditText mEditJenisPaket;
     private EditText mEditTglKeberangkatan;
@@ -56,14 +64,16 @@ public class DetailJamaahActivity extends AppActivity implements iPresenterRespo
         setTitle("Detail Jamaah");
 
         dataJamaah = (Jamaah) getIntent().getSerializableExtra("data");
+
         initView();
         initObject();
-        attachData();
         initEvent();
+//        attachData();
     }
 
     private void initObject() {
         mPresenter = new DataFormPresenter(this, this);
+        mPresenter.getDetailJamaah(Integer.valueOf(dataJamaah.getId_pendaftaraan()));
     }
 
     public RequestBody toRequestBody(String s){
@@ -124,16 +134,31 @@ public class DetailJamaahActivity extends AppActivity implements iPresenterRespo
     }
 
     private void attachData() {
-        mEditGrupKeberangkatan.setText(dataJamaah.getKode_grup() + "(Kode Grup)");
-        mEditJenisPaket.setText(dataJamaah.getKode_paket() + "(Kode Paket)");
-        mEditGrupKeberangkatan.setText(dataJamaah.getKode_grup() + "(Kode Grup)");
-        mEditGrupKeberangkatan.setText(dataJamaah.getKode_grup() + "(Kode Grup)");
-        mEditTglKeberangkatan.setText(dataJamaah.getTgl_berangkat());
-        mEditNominalJamaahPay.setText(dataJamaah.getDibayar());
+        mEditGrupKeberangkatan.setText(detailJamaah.getGrup_keberangkatan());
+        mEditNoKwitansi.setText(detailJamaah.getNo_kwitansi());
+        mEditStatusKwitansi.setText(detailJamaah.getStatus_kwitansi());
         mEditNamaLengkap.setText(dataJamaah.getNama_jamaah());
-        mEditNamaAyah.setText(dataJamaah.getNama_ayah());
-        mEditNoKwitansi.setText(dataJamaah.getNo_kwitansi());
-        mEditHargaPaket.setText(dataJamaah.getHarga());
+        mEditJenisPaket.setText(detailJamaah.getNama_paket());
+        mEditTglKeberangkatan.setText(detailJamaah.getTgl_berangkat());
+        mEditNominalDp.setText(detailJamaah.getNominal_dp());
+        mEditNamaAyah.setText(detailJamaah.getNama_ayah());
+        mEditHargaPaket.setText(detailJamaah.getHarga());
+
+        if (!(detailJamaah.getKtp().equals("") || detailJamaah.getKtp().equals(null))){
+            Log.d("KTP", BuildConfig.API_URL+"images_info/images_member/crop_mini/"+detailJamaah.getKtp());
+            Picasso.with(this)
+                    .load(BuildConfig.API_URL+"images_info/images_member/crop_mini/"+detailJamaah.getKtp())
+                    .placeholder(R.drawable.ic_menu_camera)
+                    .into(imgIdentity);
+        }
+
+        if (!(detailJamaah.getFoto().equals("") || detailJamaah.getFoto().equals(null))){
+            Log.d("Foto", BuildConfig.API_URL+"images_info/images_member/crop_mini/"+detailJamaah.getFoto());
+            Picasso.with(this)
+                    .load(BuildConfig.API_URL+"images_info/images_member/crop_mini/"+detailJamaah.getFoto())
+                    .placeholder(R.drawable.ic_menu_camera)
+                    .into(imgPassFoto);
+        }
     }
 
     private void initView() {
@@ -159,6 +184,11 @@ public class DetailJamaahActivity extends AppActivity implements iPresenterRespo
                 Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show();
+            }
+        }else if(tag.equals(RES_GET_DETAIL_JAMAAH)){
+            if (!response.error){
+                detailJamaah = ((DetailJamaahResponse) response).jamaah;
+                attachData();
             }
         }
     }

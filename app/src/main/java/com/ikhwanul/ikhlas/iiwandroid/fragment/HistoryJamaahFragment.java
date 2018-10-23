@@ -126,7 +126,7 @@ public class HistoryJamaahFragment extends AppFragment implements iPresenterResp
         if (tag.equals(Presenter.RES_GET_DATA_JAMAAH)){
             dataJamaah = ((JamaahResponse)response).jamaah;
             if (dataJamaah.size() > 0){
-                mAdapter = new JamaahAdapter(getContext(), dataJamaah);
+                mAdapter = new JamaahAdapter(getContext(), dataJamaah, true);
                 rvJamaah.setLayoutManager(new GridLayoutManager(getContext(), 1));
                 rvJamaah.setAdapter(mAdapter);
                 rvJamaah.setVisibility(View.VISIBLE);

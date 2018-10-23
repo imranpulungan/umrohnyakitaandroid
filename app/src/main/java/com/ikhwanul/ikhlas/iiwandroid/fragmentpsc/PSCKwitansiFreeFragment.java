@@ -147,6 +147,7 @@ public class PSCKwitansiFreeFragment extends AppFragment implements iPresenterRe
                 return true;
             case R.id.nav_beri:
                 intent = new Intent(getContext(), PSCBeriKwitansiActivity.class);
+                intent.putExtra("id", Integer.valueOf(dataUser.id_perwakilan));
                 startActivity(intent);
                 return true;
         }

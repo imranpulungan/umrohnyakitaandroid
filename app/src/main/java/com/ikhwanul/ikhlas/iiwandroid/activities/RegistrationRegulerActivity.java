@@ -1,5 +1,7 @@
 package com.ikhwanul.ikhlas.iiwandroid.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,10 +23,16 @@ import android.widget.Toast;
 
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.DPResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.GroupResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KabupatenResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.ProductResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ProvinsiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.core.AppActivity;
+import com.ikhwanul.ikhlas.iiwandroid.entities.DP;
+import com.ikhwanul.ikhlas.iiwandroid.entities.Group;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Kabupaten;
+import com.ikhwanul.ikhlas.iiwandroid.entities.Product;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Provinsi;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.HomeFragment;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.DataFormPresenter;
@@ -43,14 +52,18 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.RES_GET_ALL_DP;
+import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.RES_GET_ALL_GROUP;
+import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.RES_GET_ALL_PRODUCT;
+
 public class RegistrationRegulerActivity extends AppActivity implements iPresenterResponse {
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 
-    List<String> grupGo = new ArrayList<String>();
-    List<String> nominalDP = new ArrayList<String>();
-    List<String> jenisPaket = new ArrayList<String>();
+    List<Group> grupGo = new ArrayList<Group>();
+    List<Product> jenisPaket = new ArrayList<Product>();
+    List<DP> dP = new ArrayList<DP>();
     List<String> souvenir = new ArrayList<String>();
     List<String> provinsi = new ArrayList<String>();
     List<Provinsi> dataProvinsi = new ArrayList<Provinsi>();
@@ -91,6 +104,27 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
         initObject();
         initView();
         initEvent();
+        attachData();
+    }
+
+    private void attachData() {
+        List<String> jenisPaketString = new ArrayList<>();
+        for (Product product: jenisPaket) {
+            jenisPaketString.add(product.getProduk());
+        }
+        chooseWithSpinner(jenisPaketString, mSpinnerJenisPaket);
+
+        List<String> dPString = new ArrayList<>();
+        for (DP dp: dP) {
+            dPString.add(dp.getJenis_dp());
+        }
+        chooseWithSpinner(dPString, mSpinnerNominalDP);
+
+        List<String> groupString = new ArrayList<>();
+        for (Group group: grupGo) {
+            groupString.add(group.getJenis_grup());
+        }
+        chooseWithSpinner(groupString , mSpinnerGrupKeberangkaran);
     }
 
     private void initView() {
@@ -132,22 +166,8 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
         mBtnSave = (Button) findViewById(R.id.btn_save);
 
 
-        grupGo.add("Umroh Reguler");
-        grupGo.add("Umroh Plus");
-        chooseWithSpinner(grupGo, mSpinnerGrupKeberangkaran);
-
-        jenisPaket.add("Paket Umroh Standar");
-        jenisPaket.add("Paket Umroh Executive");
-        jenisPaket.add("Biaya Progressive Visa");
-        chooseWithSpinner(jenisPaket, mSpinnerJenisPaket);
-
-
-        nominalDP.add("1500000");
-        nominalDP.add("2500000");
-        chooseWithSpinner(nominalDP, mSpinnerNominalDP);
-
-        souvenir.add("1500000");
-        souvenir.add("2500000");
+        souvenir.add("Baju Koko");
+        souvenir.add("Mukena");
         chooseWithSpinner(souvenir, mSpinnerSouvenir);
 
         if (type_registration.equals(HomeFragment.TAG_FREE)){
@@ -183,6 +203,25 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
                 }
             }
         });
+
+        mEditTglBerangkat.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    mEditTglBerangkat.clearFocus();
+                }
+            }
+        });
+
+        mEditTanggalLahir.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    mEditTanggalLahir.clearFocus();
+                }
+            }
+        });
+
         mEditTglBerangkat.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -230,10 +269,9 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
             public void onClick(View v) {
                 Map<String, RequestBody> dataAdd = new HashMap<>();
                 dataAdd.put("id_perwakilan", toRequestBody(id_perwakilan));
-                dataAdd.put("grup", toRequestBody(String.valueOf(mSpinnerGrupKeberangkaran.getSelectedItem())));
-
-                dataAdd.put("paket", toRequestBody(String.valueOf(mSpinnerJenisPaket.getSelectedItem())));
-                dataAdd.put("dp", toRequestBody(String.valueOf(mSpinnerNominalDP.getSelectedItem())));
+                dataAdd.put("grup", toRequestBody(String.valueOf(grupGo.get(mSpinnerGrupKeberangkaran.getSelectedItemPosition()).getId_grup())));
+                dataAdd.put("paket", toRequestBody(String.valueOf(jenisPaket.get(mSpinnerJenisPaket.getSelectedItemPosition()).getId_produk())));
+                dataAdd.put("dp", toRequestBody(String.valueOf(dP.get(mSpinnerNominalDP.getSelectedItemPosition()).getId_dp())));
                 dataAdd.put("harga", toRequestBody(mEditHargaPaket.getText().toString()));
                 dataAdd.put("berangkat", toRequestBody(mEditTglBerangkat.getText().toString()));
                 dataAdd.put("no_kwitansi", toRequestBody(mEditNoKwitansi.getText().toString()));
@@ -279,7 +317,7 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
 //                    dataAdd.put("foto_pass\"; filename=\""+generatedString+".jpg\"", _requestbody);
 //                }
 
-//                mPresenter.addNewJamaah(dataAdd);
+                mPresenter.addNewJamaah(dataAdd);
                 Log.d("POST", dataAdd.toString());
                 Toast.makeText(RegistrationRegulerActivity.this, "CLICKED", Toast.LENGTH_SHORT).show();
             }
@@ -348,6 +386,9 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
     private void initObject() {
         mPresenter = new DataFormPresenter(RegistrationRegulerActivity.this, this);
         mPresenter.getProvinsi();
+        mPresenter.getAllProduct();
+        mPresenter.getAllDP();
+        mPresenter.getAllGroup();
         if (type_registration.equals(HomeFragment.TAG_REGULER)){
             setTitle("Kwitansi Reguler");
             mPresenter.getKwitansiForJamaah(id_perwakilan);
@@ -383,6 +424,8 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
             }
         }else if(tag.equals(Presenter.ADD_NEW_JAMAAH)){
             Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show();
+            if (!response.error)
+                onBackPressed();
         }else if(tag.equals(Presenter.RES_GET_DATA_KWITANSI_JAMAAH)){
             if (!response.error){
                 mEditNoKwitansi.setText(response.message);
@@ -390,6 +433,15 @@ public class RegistrationRegulerActivity extends AppActivity implements iPresent
                 Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
+        }else if(tag.equals(RES_GET_ALL_PRODUCT)){
+            jenisPaket = ((ProductResponse) response).product;
+            attachData();
+        }else if(tag.equals(RES_GET_ALL_DP)){
+            dP = ((DPResponse) response).dp;
+            attachData();
+        }else if(tag.equals(RES_GET_ALL_GROUP)){
+            grupGo = ((GroupResponse)response).groups;
+            attachData();
         }
 
     }

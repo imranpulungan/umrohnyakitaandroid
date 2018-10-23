@@ -2,22 +2,17 @@ package com.ikhwanul.ikhlas.iiwandroid.adapter;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,20 +23,14 @@ import android.widget.Toast;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.activities.DetailJamaahActivity;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
+import com.ikhwanul.ikhlas.iiwandroid.utils.FileDownloader;
+import com.ikhwanul.ikhlas.iiwandroid.utils.PDFTools;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.content.Context.DOWNLOAD_SERVICE;
 
 
 public class JamaahAdapter extends
@@ -49,13 +38,7 @@ public class JamaahAdapter extends
 
     private List<Jamaah> jamaahList;
     private ArrayList<Jamaah> arraylist;
-
-    // Progress Dialog
-    private ProgressDialog pDialog;
-    public static final int progress_bar_type = 0;
-
-    // File url to download
-    private static String file_url = "http://www.qwikisoft.com/demo/ashade/20001.kml";
+    boolean isHistory;
 
     Context context;
 
@@ -86,11 +69,12 @@ public class JamaahAdapter extends
         }
     }
 
-    public JamaahAdapter(Context context, List<Jamaah> jamaahList) {
+    public JamaahAdapter(Context context, List<Jamaah> jamaahList, boolean isHistory) {
         this.context = context;
         this.jamaahList = jamaahList;
         this.arraylist = new ArrayList<Jamaah>();
         this.arraylist.addAll(jamaahList);
+        this.isHistory = isHistory;
     }
 
     @Override
@@ -103,6 +87,9 @@ public class JamaahAdapter extends
         holder.tvNameJamaah.setText(dataJamaah.getNama_jamaah());
         holder.tvDateGo.setText(dataJamaah.getTgl_berangkat());
 
+        if (isHistory){
+            holder.imgbtnDownload.setVisibility(View.GONE);
+        }
 
         holder.imgbtnCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,25 +102,7 @@ public class JamaahAdapter extends
         holder.imgbtnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "https://www.ikhwanulikhlaswisata.com/perwakilan/pdf/pdf.php?page=jamaah&id=" + dataJamaah.getId_pendaftaraan().toString(), Toast.LENGTH_LONG).show();
-// declare the dialog as a member field of your activity
-// instantiate it within the onCreate method
-                mProgressDialog = new ProgressDialog(context);
-                mProgressDialog.setMessage("A message");
-                mProgressDialog.setIndeterminate(true);
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(true);
-
-// execute this when the downloader must be fired
-                final DownloadTask downloadTask = new DownloadTask(context);
-                downloadTask.execute("https://www.ikhwanulikhlaswisata.com/perwakilan/pdf/pdf.php?page=jamaah&id=" + dataJamaah.getId_pendaftaraan().toString());
-
-                mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        downloadTask.cancel(true);
-                    }
-                });
+                PDFTools.showPDFUrl(context, "https://ikhwanulikhlaswisata.com/perwakilan/pdf/pdf.php?page=jamaahwithandroid&id=" + dataJamaah.getId_pendaftaraan());
             }
         });
 
@@ -187,101 +156,45 @@ public class JamaahAdapter extends
         return new MyViewHolder(v);
     }
 
-    private class DownloadTask extends AsyncTask<String, Integer, String> {
+    public void download(View v)
+    {
+        new DownloadFile().execute("http://maven.apache.org/maven-1.x/maven.pdf", "maven.pdf");
+    }
 
-        private Context context;
-        private PowerManager.WakeLock mWakeLock;
+    public void view(View v)
+    {
+        File pdfFile = new File(Environment.getExternalStorageDirectory() + "/testthreepdf/" + "maven.pdf");  // -> filename = maven.pdf
+        Uri path = Uri.fromFile(pdfFile);
+        Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+        pdfIntent.setDataAndType(path, "application/pdf");
+        pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        public DownloadTask(Context context) {
-            this.context = context;
+        try{
+            context.startActivity(pdfIntent);
+        }catch(ActivityNotFoundException e){
+            Toast.makeText(context, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private class DownloadFile extends AsyncTask<String, Void, Void>{
 
         @Override
-        protected String doInBackground(String... sUrl) {
-            InputStream input = null;
-            OutputStream output = null;
-            HttpURLConnection connection = null;
-            try {
-                URL url = new URL(sUrl[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
+        protected Void doInBackground(String... strings) {
+            String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
+            String fileName = strings[1];  // -> maven.pdf
+            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+            File folder = new File(extStorageDirectory, "testthreepdf");
+            folder.mkdir();
 
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode()
-                            + " " + connection.getResponseMessage();
-                }
+            File pdfFile = new File(folder, fileName);
 
-                // this will be useful to display download percentage
-                // might be -1: server did not report the length
-                int fileLength = connection.getContentLength();
-
-                // download the file
-                input = connection.getInputStream();
-                output = new FileOutputStream("/sdcard/file_name.extension");
-
-                byte data[] = new byte[4096];
-                long total = 0;
-                int count;
-                while ((count = input.read(data)) != -1) {
-                    // allow canceling with back button
-                    if (isCancelled()) {
-                        input.close();
-                        return null;
-                    }
-                    total += count;
-                    // publishing the progress....
-                    if (fileLength > 0) // only if total length is known
-                        publishProgress((int) (total * 100 / fileLength));
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                return e.toString();
-            } finally {
-                try {
-                    if (output != null)
-                        output.close();
-                    if (input != null)
-                        input.close();
-                } catch (IOException ignored) {
-                }
-
-                if (connection != null)
-                    connection.disconnect();
+            try{
+                pdfFile.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
             }
+            FileDownloader.downloadFile(fileUrl, pdfFile);
             return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // take CPU lock to prevent CPU from going off if the user
-            // presses the power button during download
-            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                    getClass().getName());
-            mWakeLock.acquire();
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-            super.onProgressUpdate(progress);
-            // if we get here, length is known, now set indeterminate to false
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.setMax(100);
-            mProgressDialog.setProgress(progress[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            mWakeLock.release();
-            mProgressDialog.dismiss();
-            if (result != null)
-                Toast.makeText(context, "Download error: " + result, Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show();
         }
     }
 }

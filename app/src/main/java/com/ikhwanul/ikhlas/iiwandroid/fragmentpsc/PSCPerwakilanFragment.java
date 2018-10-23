@@ -66,14 +66,16 @@ public class PSCPerwakilanFragment extends AppFragment implements iPresenterResp
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             dataUser = (User) getArguments().getSerializable("send");
         }
-        setHasOptionsMenu(true);
 
         initView();
         initObject();
         initEvent();
+
+
 
         return view;
     }
@@ -95,6 +97,8 @@ public class PSCPerwakilanFragment extends AppFragment implements iPresenterResp
         switch (item.getItemId()){
             case R.id.nav_jual_kwitansi:
                 Intent intent = new Intent(getContext(), PSCTambahPerwakilanActivity.class);
+
+                intent.putExtra("id_psc", Integer.valueOf(dataUser.id_perwakilan));
                 startActivity(intent);
                 return true;
         }
@@ -104,6 +108,7 @@ public class PSCPerwakilanFragment extends AppFragment implements iPresenterResp
     @Override
     public void onStart() {
         super.onStart();
+        mPresenter.getPSCPerwakilan(Integer.valueOf(dataUser.id_perwakilan), progressDialog, true);
     }
 
 

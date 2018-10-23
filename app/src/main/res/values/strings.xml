@@ -57,5 +57,16 @@
     <string name="kontrak_berakhir">Berakhir Kontrak</string>
     <string name="prompt_jabatan">Jabatan</string>
     <string name="date">dd/mm/yyyy</string>
+    <string name="pdf_show_local_progress_title">Title Progress</string>
+    <string name="pdf_show_local_progress_content">content progress</string>
+    <string name="pdf_show_online_dialog_title">dialog title</string>
+    <string name="pdf_show_online_dialog_question">dialog question</string>
+    <string name="pdf_show_online_dialog_button_no">Tidak</string>
+    <string name="pdf_show_online_dialog_button_yes">Ya</string>
+    <string name="notice_tgl_berangkat">Kosongkan bila belum menentukan keberangkatan.</string>
+    <string name="notice_harga_paket">Wajib diisi. Nilai dalam satuan dollar (ketik \'0\' bila belum menentukan keberangkatan)</string>
+    <string name="wajib">Wajib diisi.</string>
+    <string name="notice_nominal_jamaah">Wajib diisi. Nominal yang diberikan Jamaah kepada Perwakilan. Minimal Rp. 150.000,-</string>
+    <string name="notice_kwitansi">Pelunasan : 3 Bulan sebelum keberangkatan.</string>
 
 </resources>

@@ -5,7 +5,10 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanKDMResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.CalonPerwakilanResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.DPResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.DetailJamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.DollarResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.GroupResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.JamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KDMBelanjaResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KabupatenResponse;
@@ -17,10 +20,12 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.KwitansiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PPCResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataHistoryStokResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataJualKwitansiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataPerwakilanDetailResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCKomisiRekomendasiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCKwitansiPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PembelianResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.ProductResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ProvinsiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.RewardResponse;
 import com.ikhwanul.ikhlas.iiwandroid.entities.PSCKwitansiPerwakilan;
@@ -95,6 +100,12 @@ public interface ApiInterface {
     @GET("Api.php?apicall=allprovinsi")
     Call<ProvinsiResponse> getProvinsi();
 
+    @GET("Api.php?apicall=alldp")
+    Call<DPResponse> getAllDp();
+
+    @GET("Api.php?apicall=allproduct")
+    Call<ProductResponse> getAllProduct();
+
     @POST("Api.php?apicall=kabupaten")
     Call<KabupatenResponse> getKabupaten(@Body Map<String, Integer> data);
 
@@ -115,7 +126,7 @@ public interface ApiInterface {
     Call<KDMBelanjaResponse> getInfoPSC(@Body Map<String, String> data);
 
     //KWITANSI
-    @POST("Api.php?apicall=belipsc")
+    @POST("Api.php?apicall=kwitansi")
     Call<KwitansiResponse> getKwitansi(@Body Map<String, Integer> data);
 
     @GET("Api.php?apicall=islogged")
@@ -184,12 +195,32 @@ public interface ApiInterface {
     @POST("Api.php?apicall=pscdatakwitansifree-datapemberianfree")
     Call<PSCDataJualKwitansiResponse> getPemberianKwitansi(@Body Map<String, Integer> data);
 
-    @GET("Api.php?apicall=generateperwakilan")
-    Call<CalonPerwakilanResponse> generatePerwakilan();
+    @POST("Api.php?apicall=generateperwakilan")
+    Call<CalonPerwakilanResponse> generatePerwakilan(@Body Map<String, Integer> data);
 
-    @Multipart
     @POST("Api.php?apicall=tambahperwakilanproses")
-    Call<ApiResponse> addNewPerwakilan(@PartMap Map<String, RequestBody> dataAdd);
+    Call<ApiResponse> addNewPerwakilan(@Body Map<String, String> dataAdd);
+
+    @POST("Api.php?apicall=pscdataperwakilan-detail")
+    Call<PSCDataPerwakilanDetailResponse> getDetailPerwakilan(@Body Map<String, Integer> dataAdd);
+
+    @POST("Api.php?apicall=getstokkwitansi")
+    Call<ApiResponse> getStokkwitansi(@Body Map<String, Integer> data);
+
+    @POST("Api.php?apicall=berikwitansifree")
+    Call<ApiResponse> shareKwitansi(@Body Map<String, String> data);
+
+    @POST("Api.php?apicall=jualkwitansi")
+    Call<ApiResponse> sellKwitansi(@Body Map<String, String> data);
+
+    @POST("Api.php?apicall=updateprofilperwakilan")
+    Call<AuthResponse> updateProfilePerwakilan(@Body Map<String, String> data);
+
+    @POST("Api.php?apicall=allgrup")
+    Call<GroupResponse> getAllGroup();
+
+    @POST("Api.php?apicall=detailjamaah")
+    Call<DetailJamaahResponse> getDetailJamaah(@Body Map<String, Integer> data);
 
 
 //

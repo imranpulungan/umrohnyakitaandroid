@@ -63,13 +63,13 @@ public class KomisiPerwakilanAdapter extends
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Komisi dataKomisi = komisiPerwakilanList.get(position);
-
-        holder.tvIdPerwakilan.setText(dataKomisi.getId_perwakilan());
+        holder.tvNamaPerwakilan.setText(dataKomisi.getNama_lengkap());
         holder.tvKeterangan.setText(dataKomisi.getKet());
         holder.tvJumlah.setText(FormatRupiah.useFormat(dataKomisi.getJumlah()));
         holder.tvTanggalKomisi.setText(dataKomisi.getTgl_dibuat());
         holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diclaim": "Belum diclaim");
 
+        holder.tvIdPerwakilan.setVisibility(View.GONE);
         if (!dataKomisi.getFoto().equals("") || dataKomisi.getFoto() != null){
             Picasso.with(context)
                     .load(BuildConfig.API_URL+"images_info/images_member/crop_mini/"+dataKomisi.getFoto())

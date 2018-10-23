@@ -53,11 +53,21 @@ public class KwitansiAdapter extends
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Kwitansi dataKwitansi = kwitansiList.get(position);
-
-        holder.tvNoKwitansi.setText(dataKwitansi.getNo_kwintansi());
+        int jenis_kwitansi = Integer.valueOf(dataKwitansi.getJenis_kwitansi());
+        String jenis_kw = "-";
+        holder.tvNoKwitansi.setText(dataKwitansi.getNo_kwitansi());
         holder.tvNoTransaksi.setText(dataKwitansi.getNo_transaksi());
-        holder.tvStatus.setText(dataKwitansi.getStatus());
+        holder.tvSudahBelum.setText(dataKwitansi.getStatus_guna().equals("0")? "Belum digunakan" : "Sudah digunakan");
 
+        if(jenis_kwitansi <= 0){
+            jenis_kw = "Free";
+        }else if(jenis_kwitansi <=1){
+            jenis_kw = "Reguler";
+        }else if(jenis_kwitansi<=2){
+            jenis_kw = "CReguler";
+        }
+
+        holder.tvStatus.setText(jenis_kw);
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -76,7 +86,7 @@ public class KwitansiAdapter extends
             kwitansiList.addAll(arraylist);
         } else {
             for (Kwitansi wp : arraylist) {
-                if (wp.getNo_kwintansi().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (wp.getNo_kwitansi().toLowerCase(Locale.getDefault()).contains(charText)) {
                     kwitansiList.add(wp);
                 }
             }

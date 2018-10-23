@@ -10,7 +10,10 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanKDMResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.DPResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.DetailJamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.DollarResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.GroupResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.JamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KDMBelanjaResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiKDMResponse;
@@ -21,12 +24,15 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.KwitansiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PPCResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataHistoryStokResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataJualKwitansiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataPerwakilanDetailResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCKomisiRekomendasiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCKwitansiPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PembelianResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.ProductResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.RewardResponse;
 import com.ikhwanul.ikhlas.iiwandroid.entities.PSCDataJualKwitansi;
+import com.ikhwanul.ikhlas.iiwandroid.entities.PSCDataPerwakilanDetail;
 import com.ikhwanul.ikhlas.iiwandroid.entities.PSCKwitansiPerwakilan;
 import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 import java.io.IOException;
@@ -43,6 +49,7 @@ import retrofit2.Response;
 
 public class Presenter extends MainActivity {
     public static final String RES_GET_DATA_BINAAN = "get_data_binaan";
+    public static final String RES_GET_DATA_BINAAN_DETAIL = "get_data_binaan_detail";
     public static final String RES_GET_DATA_BINAAN_KDM = "get_data_binaan_kdm";
     public static final String RES_GET_DATA_BINAAN_MM = "get_data_binaan_mm";
     public static final String RES_GET_DATA_JAMAAH = "get_data_jamaah";
@@ -63,6 +70,15 @@ public class Presenter extends MainActivity {
     public static final String RES_GET_DATA_KOMISI_KDM = "get_data_komisi_kdm";
     public static final String RES_GET_DATA_PPC = "get_data_ppc";
     public static final String RES_GET_GENERATE_PERWAKILAN = "res_get_generate_perwakilan";
+    public static final String GET_STOK_KWITANSI = "res_get_stok_kwitansi";
+    public static final String SHARE_KWITANSI = "res_post_share_kwitansi";
+    public static final String SELL_KWITANSI = "res_sell_kwitansi";
+    public static final String UPDATE_PROFILE_PERWAKILAN = "res_update_profile_perwakilan";
+    public static final String RES_GET_ALL_PRODUCT = "get_all_product";
+    public static final String RES_GET_ALL_DP = "get_all_dp";
+    public static final String RES_GET_ALL_GROUP = "get_all_group";
+    public static final String RES_GET_DETAIL_JAMAAH = "get_detail_jamaah";
+
 
     protected static Context context;
     protected iPresenterResponse presenterresponse;
@@ -125,6 +141,32 @@ public class Presenter extends MainActivity {
         });
     }
 
+    public void getDetailPerwakilan(int id_perwakilan, final ProgressDialog progressDialog, boolean isFirst){
+        if (isFirst)
+            progressDialog.show();
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        data.put("id", id_perwakilan);
+        ApiClient.getInstance(context).getApi().getDetailPerwakilan(data).enqueue(new Callback<PSCDataPerwakilanDetailResponse>() {
+            @Override
+            public void onResponse(Call<PSCDataPerwakilanDetailResponse> call, Response<PSCDataPerwakilanDetailResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_DATA_BINAAN_DETAIL);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+            @Override
+            public void onFailure(Call<PSCDataPerwakilanDetailResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
     public void getDataPembelian(int id_perwakilan, final ProgressDialog progressDialog, boolean isFirst){
         if (isFirst)
             progressDialog.show();
@@ -151,11 +193,12 @@ public class Presenter extends MainActivity {
         });
     }
 
-    public void getJamaah(String id_perwakilan, final ProgressDialog progressDialog, boolean isFirst){
+    public void getJamaah(String id_perwakilan, final ProgressDialog progressDialog, boolean isFirst, int month){
         if (isFirst)
             progressDialog.show();
         Map<String, Integer> data = new HashMap<String, Integer>();
         data.put("id_perwakilan", Integer.valueOf(id_perwakilan));
+        data.put("month", Integer.valueOf(month));
         ApiClient.getInstance(context).getApi().getJamaah(data).enqueue(new Callback<JamaahResponse>() {
             @Override
             public void onResponse(Call<JamaahResponse> call, Response<JamaahResponse> response) {
@@ -808,6 +851,88 @@ public class Presenter extends MainActivity {
             public void onFailure(Call<PSCDataPerwakilanResponse> call, Throwable t) {
                 Presenter.this.onFailure(t);
                 progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getAllProduct() {
+        ApiClient.getInstance(context).getApi().getAllProduct().enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_ALL_PRODUCT);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getAllDP() {
+        ApiClient.getInstance(context).getApi().getAllDp().enqueue(new Callback<DPResponse>() {
+            @Override
+            public void onResponse(Call<DPResponse> call, Response<DPResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_ALL_DP);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<DPResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getAllGroup() {
+        ApiClient.getInstance(context).getApi().getAllGroup().enqueue(new Callback<GroupResponse>() {
+            @Override
+            public void onResponse(Call<GroupResponse> call, Response<GroupResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_ALL_GROUP);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<GroupResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getDetailJamaah(int id_pendaftaraan) {
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        data.put("id_pendaftaran", id_pendaftaraan);
+        ApiClient.getInstance(context).getApi().getDetailJamaah(data).enqueue(new Callback<DetailJamaahResponse>() {
+            @Override
+            public void onResponse(Call<DetailJamaahResponse> call, Response<DetailJamaahResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_DETAIL_JAMAAH);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<DetailJamaahResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
             }
         });
     }

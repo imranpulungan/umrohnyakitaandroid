@@ -29,6 +29,7 @@ import com.ikhwanul.ikhlas.iiwandroid.fragment.JamaahFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.KomisiPSCFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.OnFragmentInteractionListener;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.ProfileFragment;
+import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , OnFragmentInteractionListener {
@@ -130,6 +131,30 @@ public class MainActivity extends AppCompatActivity
             }else if(id == R.id.nav_jamaah_history){
                 setTitle("History Jamaah");
                 fragmentContent = HistoryJamaahFragment.newInstance();
+            }else if(id == R.id.nav_logout){
+                if (dataUser != null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setCancelable(true);
+                    builder.setTitle("Logout");
+                    builder.setMessage("Yakin ingin keluar dari akun \n"+ dataUser.username);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Session.with(MainActivity.this).clearLoginSession();
+                                }
+                            });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }else{
+                    Session.with(MainActivity.this).clearLoginSession();
+                }
             }
             FragmentManager frgManager = getSupportFragmentManager();
             Bundle bundle = new Bundle();

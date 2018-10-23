@@ -32,13 +32,16 @@ import android.widget.Toast;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.activities.RegistrationRegulerActivity;
 import com.ikhwanul.ikhlas.iiwandroid.adapter.HomeInfoAdapter;
+import com.ikhwanul.ikhlas.iiwandroid.adapter.JamaahAdapter;
 import com.ikhwanul.ikhlas.iiwandroid.adapterpsc.PSCDataPenjualanKwitansiAdapter;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.DollarResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.JamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KDMBelanjaResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataJualKwitansiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.core.AppFragment;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Dollar;
+import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
 import com.ikhwanul.ikhlas.iiwandroid.entities.KDMBelanja;
 import com.ikhwanul.ikhlas.iiwandroid.entities.PSCDataJualKwitansi;
 import com.ikhwanul.ikhlas.iiwandroid.entities.User;
@@ -53,6 +56,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.RES_GET_DATA_JAMAAH;
+
 public class HomeFragment extends AppFragment implements iPresenterResponse{
 
     public static final String TAG_FREE = "free_registration";
@@ -62,9 +67,10 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
 
     private LinearLayout layoutKwitansiReguler, layoutLwitansiFree, layoutKwitansiOld;
     private User dataUser;
-    private TextView tvNama, tvIdPerwakilan, tvKursDollar, tvJabatan;
+    private TextView tvNama, tvIdPerwakilan, tvKursDollar, tvJabatan, tvTitleList;
     private RecyclerView rvInfo;
     private List<PSCDataJualKwitansi> dataPerwakilanPSC;
+    private List<Jamaah> dataJamaah;
     protected LinearLayout layoutBottomSheet, layoutInfoPSC, layoutInfoPerwakilan, layoutInsufficent;
     ProgressDialog progressDialog;
 
@@ -73,6 +79,7 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
     Presenter mPresenter;
 
     HomeInfoAdapter mAdapter;
+    JamaahAdapter mAdapterJamaah;
 
     PSCDataPenjualanKwitansiAdapter pscDataPenjualanKwitansiAdapter;
 
@@ -143,13 +150,15 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
                 tvJabatan.setText(R.string.jabatan_perwakilan_kdm);
             }
             layoutInfoPerwakilan.setVisibility(View.VISIBLE);
-            layoutInfoPSC.setVisibility(View.GONE);
+            layoutInfoPSC.setVisibility(View.VISIBLE);
+            mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, true, 0);
+            tvTitleList.setText("Data Jamaah Terakhir");
         }else{
             tvJabatan.setText(R.string.channel_psc);
             layoutInfoPerwakilan.setVisibility(View.GONE);
             layoutInfoPSC.setVisibility(View.VISIBLE);
             mPresenter.getPenjualanKwitansi(Integer.valueOf(dataUser.id_perwakilan), progressDialog, true, 0);
-
+            tvTitleList.setText("Data Penjualan Terakhir");
         }
     }
 
@@ -157,6 +166,7 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
         rvInfo = (RecyclerView) findViewById(R.id.rv_info);
         LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
+        tvTitleList = (TextView) findViewById(R.id.tv_title_list);
         layoutInsufficent = (LinearLayout) findViewById(R.id.insufficient);
         rvInfo.setLayoutManager(horizontalLayoutManagaer);
         tvJabatan = (TextView) findViewById(R.id.tv_jabatan);
@@ -169,7 +179,7 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
         carouselView = (CarouselView) findViewById(R.id.carouselView);
         layoutBottomSheet = (LinearLayout) findViewById(R.id.bottom_sheet_info);
         layoutInfoPerwakilan = (LinearLayout) findViewById(R.id.info_perwakilan);
-        layoutInfoPSC = (LinearLayout) findViewById(R.id.info_psc);
+        layoutInfoPSC = (LinearLayout) findViewById(R.id.info_list);
 
         rvDataPerwakilan = (RecyclerView) findViewById(R.id.rv_data_perwakilan);
         rvDataPerwakilan.setHasFixedSize(true);
@@ -282,6 +292,18 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
                 pscDataPenjualanKwitansiAdapter = new PSCDataPenjualanKwitansiAdapter(getContext(), dataPerwakilanPSC);
                 rvDataPerwakilan.setLayoutManager(new GridLayoutManager(getContext(), 1));
                 rvDataPerwakilan.setAdapter(pscDataPenjualanKwitansiAdapter);
+                rvDataPerwakilan.setVisibility(View.VISIBLE);
+                layoutInsufficent.setVisibility(View.GONE);
+            }else{
+                rvDataPerwakilan.setVisibility(View.GONE);
+                layoutInsufficent.setVisibility(View.VISIBLE);
+            }
+        }else if (tag.equals(Presenter.RES_GET_DATA_JAMAAH)){
+            dataJamaah = ((JamaahResponse)response).jamaah;
+            if (dataJamaah.size() > 0){
+                mAdapterJamaah = new JamaahAdapter(getContext(), dataJamaah, false);
+                rvDataPerwakilan.setLayoutManager(new GridLayoutManager(getContext(), 1));
+                rvDataPerwakilan.setAdapter(mAdapterJamaah);
                 rvDataPerwakilan.setVisibility(View.VISIBLE);
                 layoutInsufficent.setVisibility(View.GONE);
             }else{

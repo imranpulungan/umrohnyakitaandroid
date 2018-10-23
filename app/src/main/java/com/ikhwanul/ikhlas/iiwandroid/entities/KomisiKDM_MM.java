@@ -7,7 +7,7 @@ public class KomisiKDM_MM implements Serializable{
     private String jumlah;
     private String id_perwakilan;
     private String id_perekomendasi;
-    private String ket;
+    private String keterangan;
     private String tgl_dibuat;
     private String kategori;
     private String status;
@@ -80,14 +80,6 @@ public class KomisiKDM_MM implements Serializable{
         this.id_perekomendasi = id_perekomendasi;
     }
 
-    public String getKet() {
-        return ket;
-    }
-
-    public void setKet(String ket) {
-        this.ket = ket;
-    }
-
     public String getTgl_dibuat() {
         return tgl_dibuat;
     }
@@ -110,5 +102,13 @@ public class KomisiKDM_MM implements Serializable{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
     }
 }

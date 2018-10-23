@@ -18,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ikhwanul.ikhlas.iiwandroid.BuildConfig;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Binaan;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -75,6 +77,13 @@ public class BinaanPerwakilanAdapter extends
                 Toast.makeText(context, dataBinaan.getNo_telpon(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        if (!dataBinaan.getFoto().equals("") || dataBinaan.getFoto() != null){
+            Picasso.with(context)
+                    .load(BuildConfig.API_URL+"images_info/images_member/crop_mini/"+dataBinaan.getFoto())
+                    .placeholder(R.drawable.ic_menu_profile)
+                    .into(holder.imgIcon);
+        }
     }
 
     private void makeCall(String phoneNumber){

@@ -74,7 +74,7 @@ public class JamaahFragment extends AppFragment implements iPresenterResponse, S
 
     private void initObject() {
         mPresenter = new Presenter(getContext(), this);
-        mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, true);
+        mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, true, 1);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class JamaahFragment extends AppFragment implements iPresenterResponse, S
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, false);
+                mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, false, 1);
             }
         });
     }
@@ -128,7 +128,7 @@ public class JamaahFragment extends AppFragment implements iPresenterResponse, S
         if (tag.equals(Presenter.RES_GET_DATA_JAMAAH)){
             dataJamaah = ((JamaahResponse)response).jamaah;
             if (dataJamaah.size() > 0){
-                mAdapter = new JamaahAdapter(getContext(), dataJamaah);
+                mAdapter = new JamaahAdapter(getContext(), dataJamaah, false);
                 rvJamaah.setLayoutManager(new GridLayoutManager(getContext(), 1));
                 rvJamaah.setAdapter(mAdapter);
                 rvJamaah.setVisibility(View.VISIBLE);

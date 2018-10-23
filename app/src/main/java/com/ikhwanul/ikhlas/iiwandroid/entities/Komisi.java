@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Komisi implements Serializable {
     private String id_komisi;
+    private String nama_lengkap;
     private String jumlah;
     private String id_perwakilan;
     private String id_perekomendasi;
@@ -13,7 +14,13 @@ public class Komisi implements Serializable {
     private String status;
     private String foto;
 
+    public String getNama_lengkap() {
+        return nama_lengkap;
+    }
 
+    public void setNama_lengkap(String nama_lengkap) {
+        this.nama_lengkap = nama_lengkap;
+    }
 
     public String getId_komisi() {
         return id_komisi;

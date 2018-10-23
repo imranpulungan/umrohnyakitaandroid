@@ -23,6 +23,7 @@
                     android:id="@+id/tv_no_transaksi"/>
                 <LinearLayout
                     android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_gravity="right"
                     android:gravity="right">
                     <TextView

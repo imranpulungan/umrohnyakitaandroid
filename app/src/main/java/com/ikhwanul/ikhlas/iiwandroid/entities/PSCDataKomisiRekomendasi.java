@@ -4,9 +4,18 @@ import java.io.Serializable;
 
 public class PSCDataKomisiRekomendasi implements Serializable {
     private String tipe;
+    private String status;
     private String jumlah;
     private String keterangan;
     private String bln_tahun;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getBln_tahun() {
         return bln_tahun;

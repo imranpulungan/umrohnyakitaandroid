@@ -34,7 +34,7 @@
                     android:background="@drawable/background_with_radius_border1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:editable="false"/>
 
                 <TextView
@@ -51,7 +51,7 @@
                     android:background="@drawable/background_with_radius_border1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:editable="false"/>
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:background="@drawable/background_with_radius_border1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:editable="false"/>
 
 
@@ -86,9 +86,9 @@
                     android:background="@drawable/background_with_radius_border1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="Harga Paket"/>
-
+                    android:padding="10dp"
+                    android:hint="Harga Paket"
+                    android:editable="false"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                     android:background="@drawable/background_with_radius_border1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:editable="false"/>
                 <EditText
                     android:id="@+id/edit_nominal_jamaah_pay"
@@ -114,8 +114,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_nominal_jamaah_pay"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_nominal_jamaah_pay"
+                    android:editable="false"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -131,7 +132,7 @@
                     android:background="@drawable/background_with_radius_border2"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:editable="false"/>
                 <EditText
                     android:id="@+id/edit_status_kwitansi"
@@ -141,8 +142,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/hint_status_kwitansi"/>
+                    android:padding="10dp"
+                    android:hint="@string/hint_status_kwitansi"
+                    android:editable="false"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -174,8 +176,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_nama_lengkap"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_nama_lengkap"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_nama_ayah"
@@ -185,8 +188,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_nama_ayah"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_nama_ayah"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_no_identitas"
@@ -196,8 +200,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_no_identitas"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_no_identitas"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_tempat_lahir"
@@ -207,8 +212,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_tempat_lahir"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_tempat_lahir"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_tanggal_lahir"
@@ -218,8 +224,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_tanggal_lahir"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_tanggal_lahir"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_no_paspor"
@@ -229,8 +236,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_no_paspor"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_no_paspor"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_tempat_paspor_dikeluarkan"
@@ -240,8 +248,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_paspor_dikeluarkan"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_paspor_dikeluarkan"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/edit_alamat"
@@ -251,8 +260,9 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:hint="@string/form_alamat"/>
+                    android:padding="10dp"
+                    android:hint="@string/form_alamat"
+                    android:editable="false"/>
 
                 <Spinner
                     android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.ikhwanul.ikhlas.iiwandroid;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiFreeFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiJamaahFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiPerwakilanFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCPerwakilanFragment;
+import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
 public class MainActivityPSC extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , OnFragmentInteractionListener {
@@ -136,6 +139,30 @@ public class MainActivityPSC extends AppCompatActivity
             }else if(id == R.id.nav_komisi){
                 setTitle("Data Komisi Rekomendasi");
                 fragmentContent = PSCKomisiRekomendasiFragment.newInstance();
+            }else if(id == R.id.nav_logout){
+                if (dataUser != null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setCancelable(true);
+                    builder.setTitle("Logout");
+                    builder.setMessage("Yakin ingin keluar dari akun \n"+ dataUser.username);
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Session.with(MainActivityPSC.this).clearLoginSession();
+                                }
+                            });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }else{
+                    Session.with(MainActivityPSC.this).clearLoginSession();
+                }
             }
             FragmentManager frgManager = getSupportFragmentManager();
             Bundle bundle = new Bundle();
