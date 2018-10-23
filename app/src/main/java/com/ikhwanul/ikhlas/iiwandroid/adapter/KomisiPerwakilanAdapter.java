@@ -67,7 +67,12 @@ public class KomisiPerwakilanAdapter extends
         holder.tvKeterangan.setText(dataKomisi.getKet());
         holder.tvJumlah.setText(FormatRupiah.useFormat(dataKomisi.getJumlah()));
         holder.tvTanggalKomisi.setText(dataKomisi.getTgl_dibuat());
-        holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diclaim": "Belum diclaim");
+        holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diklaim": "Belum diklaim");
+        if (!dataKomisi.getStatus().equals("1")){
+            holder.tvStatusKomisi.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.tvStatusKomisi.setBackgroundResource(R.color.colorDanger);
+        }
 
         holder.tvIdPerwakilan.setVisibility(View.GONE);
         if (!dataKomisi.getFoto().equals("") || dataKomisi.getFoto() != null){

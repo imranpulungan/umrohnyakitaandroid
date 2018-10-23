@@ -2,9 +2,11 @@ package com.ikhwanul.ikhlas.iiwandroid.adapter;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,11 +22,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ikhwanul.ikhlas.iiwandroid.MainActivity;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.activities.DetailJamaahActivity;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
+import com.ikhwanul.ikhlas.iiwandroid.ui.ProgressDialogHolder;
 import com.ikhwanul.ikhlas.iiwandroid.utils.FileDownloader;
 import com.ikhwanul.ikhlas.iiwandroid.utils.PDFTools;
+import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,10 +44,7 @@ public class JamaahAdapter extends
     private List<Jamaah> jamaahList;
     private ArrayList<Jamaah> arraylist;
     boolean isHistory;
-
     Context context;
-
-    ProgressDialog mProgressDialog;
 
     /**
      * View holder class
@@ -102,7 +104,29 @@ public class JamaahAdapter extends
         holder.imgbtnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PDFTools.showPDFUrl(context, "https://ikhwanulikhlaswisata.com/perwakilan/pdf/pdf.php?page=jamaahwithandroid&id=" + dataJamaah.getId_pendaftaraan());
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                builder.setTitle("Download Kwitansi");
+                builder.setMessage("Yakin ingin download Kwitansi sekarang?");
+                builder.setPositiveButton("Download",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                PDFTools.showPDFUrl(context, "https://ikhwanulikhlaswisata.com/perwakilan/pdf/pdf.php?page=jamaahwithandroid&id=" + dataJamaah.getId_pendaftaraan());
+                            }
+                        });
+                builder.setNegativeButton("Batal",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                builder.setCancelable(false);
+
+                android.support.v7.app.AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

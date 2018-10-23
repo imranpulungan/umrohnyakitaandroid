@@ -120,8 +120,7 @@ public class MainActivityKDM extends AppCompatActivity
         }else if(id == R.id.nav_commission_vice){
             setTitle("Komisi Data Perwakilan");
             fragmentContent = KomisiPerwakilanFragment.newInstance();
-        }
-        else if (id == R.id.nav_profile){
+        }else if (id == R.id.nav_profile){
             setTitle("Profile");
             fragmentContent = ProfileFragment.newInstance();
         }else if (id == R.id.nav_jamaah) {

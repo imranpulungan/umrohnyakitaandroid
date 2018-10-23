@@ -18,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.ikhwanul.ikhlas.iiwandroid.R;
+import com.ikhwanul.ikhlas.iiwandroid.ui.ProgressDialogHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class PDFTools {
 
 
     public static void showPDFUrl(final Context context, final String pdfUrl) {
+        ProgressDialogHolder.with(context).showLoadingDialog(R.string.loading);
         if (isPDFSupported(context)) {
             downloadAndOpenPDF(context, pdfUrl);
         } else {
@@ -60,11 +62,12 @@ public class PDFTools {
         if (tempFile.exists()) {
             // If we have downloaded the file before, just go ahead and show it.
             openPDF(context, Uri.fromFile(tempFile));
+            ProgressDialogHolder.with(context).dismissDialog();
             return;
         }
 
         // Show progress dialog while downloading
-        final ProgressDialog progress = ProgressDialog.show(context, context.getString(R.string.pdf_show_local_progress_title), context.getString(R.string.pdf_show_local_progress_content), true);
+//        final ProgressDialog progress = ProgressDialog.show(context, context.getString(R.string.pdf_show_local_progress_title), context.getString(R.string.pdf_show_local_progress_content), true);
 
         // Create the download request
         DownloadManager.Request r = new DownloadManager.Request(Uri.parse(pdfUrl));
@@ -73,12 +76,8 @@ public class PDFTools {
         BroadcastReceiver onComplete = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (!progress.isShowing()) {
-                    return;
-                }
+                ProgressDialogHolder.with(context).dismissDialog();
                 context.unregisterReceiver(this);
-
-                progress.dismiss();
                 long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
                 Cursor c = dm.query(new DownloadManager.Query().setFilterById(downloadId));
 
@@ -99,17 +98,7 @@ public class PDFTools {
 
 
     public static void askToOpenPDFThroughGoogleDrive(final Context context, final String pdfUrl) {
-        new AlertDialog.Builder(context)
-                .setTitle(R.string.pdf_show_online_dialog_title)
-                .setMessage(R.string.pdf_show_online_dialog_question)
-                .setNegativeButton(R.string.pdf_show_online_dialog_button_no, null)
-                .setPositiveButton(R.string.pdf_show_online_dialog_button_yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        openPDFThroughGoogleDrive(context, pdfUrl);
-                    }
-                })
-                .show();
+        ProgressDialogHolder.with(context).dismissDialog();
     }
 
     public static void openPDFThroughGoogleDrive(final Context context, final String pdfUrl) {

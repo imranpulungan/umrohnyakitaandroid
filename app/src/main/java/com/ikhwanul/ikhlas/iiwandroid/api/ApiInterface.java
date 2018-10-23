@@ -17,6 +17,7 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiPSCResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiPelunasanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KwitansiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.LaporanPembelianResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PPCResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataHistoryStokResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataJualKwitansiResponse;
@@ -28,9 +29,7 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.PembelianResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ProductResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ProvinsiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.RewardResponse;
-import com.ikhwanul.ikhlas.iiwandroid.entities.PSCKwitansiPerwakilan;
 
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -40,7 +39,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
-import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -221,6 +219,9 @@ public interface ApiInterface {
 
     @POST("Api.php?apicall=detailjamaah")
     Call<DetailJamaahResponse> getDetailJamaah(@Body Map<String, Integer> data);
+
+    @POST("Api.php?apicall=laporan-pembelian")
+    Call<LaporanPembelianResponse> getLaporanPembelian(@Body Map<String, String> data);
 
 
 //

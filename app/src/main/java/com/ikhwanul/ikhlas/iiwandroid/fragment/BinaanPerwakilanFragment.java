@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,6 +28,8 @@ import com.ikhwanul.ikhlas.iiwandroid.presenters.iPresenterResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class BinaanPerwakilanFragment extends AppFragment implements iPresenterResponse, SearchView.OnQueryTextListener{
 
@@ -51,6 +54,8 @@ public class BinaanPerwakilanFragment extends AppFragment implements iPresenterR
         BinaanPerwakilanFragment fragment = new BinaanPerwakilanFragment();
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

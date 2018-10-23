@@ -26,9 +26,16 @@ import com.ikhwanul.ikhlas.iiwandroid.fragment.BinaanPerwakilanFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.HistoryJamaahFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.HomeFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.JamaahFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.KomisiKDMFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.KomisiPSCFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.KomisiPelunasanFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.KomisiPerwakilanFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.KwitansiFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.OnFragmentInteractionListener;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.PPCFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.PembelianFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragment.ProfileFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragment.RewardFragment;
 import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
 public class MainActivity extends AppCompatActivity
@@ -112,11 +119,25 @@ public class MainActivity extends AppCompatActivity
                 m.findItem(R.id.nav_commission_paid_off).setVisible(b);
                 m.findItem(R.id.nav_commision_PSC).setVisible(b);
                 return false;
+            }else if(id == R.id.nav_cart){
+                setTitle("Hostory Pembelian");
+                fragmentContent = PembelianFragment.newInstance();
+            }else if(id == R.id.nav_PPC){
+                setTitle("PPC");
+                fragmentContent = PPCFragment.newInstance();
+            }else if(id == R.id.nav_commission_vice){
+                setTitle("Komisi Data Perwakilan");
+                fragmentContent = KomisiPerwakilanFragment.newInstance();
             }else if (id == R.id.nav_commision_PSC){
                 setTitle("Komisi PSC");
                 fragmentContent = KomisiPSCFragment.newInstance();
-            }
-            else if (id == R.id.nav_profile){
+            }else if(id == R.id.nav_commission_paid_off){
+                setTitle("Komisi Pelunasan");
+                fragmentContent = KomisiPelunasanFragment.newInstance();
+            }else if (id == R.id.nav_share) {
+                setTitle("Grup Binaan");
+                fragmentContent = BinaanPerwakilanFragment.newInstance();
+            }else if (id == R.id.nav_profile){
                 setTitle("Profile");
                 fragmentContent = ProfileFragment.newInstance();
             }else if (id == R.id.nav_jamaah) {
@@ -128,9 +149,15 @@ public class MainActivity extends AppCompatActivity
             }else if(id == R.id.nav_jamaah_data){
                 setTitle("Data Jamaah");
                 fragmentContent = JamaahFragment.newInstance();
+            }else if(id == R.id.nav_bill){
+                setTitle("Data Kwitansi");
+                fragmentContent = KwitansiFragment.newInstance();
             }else if(id == R.id.nav_jamaah_history){
                 setTitle("History Jamaah");
                 fragmentContent = HistoryJamaahFragment.newInstance();
+            }else if(id == R.id.nav_reward ){
+                setTitle("Data Reward");
+                fragmentContent = RewardFragment.newInstance();
             }else if(id == R.id.nav_logout){
                 if (dataUser != null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);

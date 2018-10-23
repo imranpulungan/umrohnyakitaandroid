@@ -151,13 +151,13 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
             }
             layoutInfoPerwakilan.setVisibility(View.VISIBLE);
             layoutInfoPSC.setVisibility(View.VISIBLE);
-            mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, true, 0);
+            mPresenter.getJamaah(dataUser.id_perwakilan, progressDialog, false, 0);
             tvTitleList.setText("Data Jamaah Terakhir");
         }else{
             tvJabatan.setText(R.string.channel_psc);
             layoutInfoPerwakilan.setVisibility(View.GONE);
             layoutInfoPSC.setVisibility(View.VISIBLE);
-            mPresenter.getPenjualanKwitansi(Integer.valueOf(dataUser.id_perwakilan), progressDialog, true, 0);
+            mPresenter.getPenjualanKwitansi(Integer.valueOf(dataUser.id_perwakilan), progressDialog, false, 0);
             tvTitleList.setText("Data Penjualan Terakhir");
         }
     }

@@ -21,6 +21,7 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiPSCResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiPelunasanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KomisiPerwakilanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KwitansiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.LaporanPembelianResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PPCResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataHistoryStokResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataJualKwitansiResponse;
@@ -78,6 +79,7 @@ public class Presenter extends MainActivity {
     public static final String RES_GET_ALL_DP = "get_all_dp";
     public static final String RES_GET_ALL_GROUP = "get_all_group";
     public static final String RES_GET_DETAIL_JAMAAH = "get_detail_jamaah";
+    public static final String RES_GET_LAPORAN_PEMBELIAN = "get_laporan_pembelian";
 
 
     protected static Context context;
@@ -932,6 +934,28 @@ public class Presenter extends MainActivity {
             }
             @Override
             public void onFailure(Call<DetailJamaahResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getLaporanPembelian(String id_pendaftaraan, String mulai, String akhir) {
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("id_pendaftaran", id_pendaftaraan);
+        ApiClient.getInstance(context).getApi().getLaporanPembelian(data).enqueue(new Callback<LaporanPembelianResponse>() {
+            @Override
+            public void onResponse(Call<LaporanPembelianResponse> call, Response<LaporanPembelianResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_LAPORAN_PEMBELIAN);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<LaporanPembelianResponse> call, Throwable t) {
                 Presenter.this.onFailure(t);
             }
         });

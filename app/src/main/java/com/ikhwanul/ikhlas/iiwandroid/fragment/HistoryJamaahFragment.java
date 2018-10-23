@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,13 @@ import com.ikhwanul.ikhlas.iiwandroid.presenters.iPresenterResponse;
 
 import java.util.List;
 
-public class HistoryJamaahFragment extends AppFragment implements iPresenterResponse {
+public class HistoryJamaahFragment extends AppFragment implements iPresenterResponse , SearchView.OnQueryTextListener{
 
     private OnFragmentInteractionListener mListener;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView rvJamaah;
+    private SearchView svData;
+
     private JamaahAdapter mAdapter;
     private LinearLayout layoutInsufficient;
 
@@ -102,6 +105,8 @@ public class HistoryJamaahFragment extends AppFragment implements iPresenterResp
     protected void initView(){
         layoutInsufficient = (LinearLayout) findViewById(R.id.insufficient);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swape_refresh);
+        svData = (SearchView) findViewById(R.id.sv_data);
+        svData.setOnQueryTextListener(this);
         rvJamaah = (RecyclerView) findViewById(R.id.rv_jamaah);
         rvJamaah.setHasFixedSize(true);
 
@@ -152,5 +157,16 @@ public class HistoryJamaahFragment extends AppFragment implements iPresenterResp
     @Override
     public void doConnectionError() {
         super.doConnectionError();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mAdapter.filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

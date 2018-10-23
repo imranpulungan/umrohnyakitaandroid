@@ -68,5 +68,8 @@
     <string name="wajib">Wajib diisi.</string>
     <string name="notice_nominal_jamaah">Wajib diisi. Nominal yang diberikan Jamaah kepada Perwakilan. Minimal Rp. 150.000,-</string>
     <string name="notice_kwitansi">Pelunasan : 3 Bulan sebelum keberangkatan.</string>
+    <string name="pembelian_stok">Pembelian Stok</string>
+    <string name="penjualan_stok">Penjualan Stok</string>
+    <string name="loading">Loading...</string>
 
 </resources>

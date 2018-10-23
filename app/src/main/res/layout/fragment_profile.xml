@@ -83,7 +83,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="No. Handphone"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:drawableRight="@drawable/ic_edit_black_24dp"
+                    android:background="@null"
+                    android:textColor="@android:color/holo_blue_dark"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -94,7 +101,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="-"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:background="@null"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -106,7 +118,12 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:layout_marginBottom="5dp"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:background="@null"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,7 +134,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_edit_black_24dp"
+                    android:textColor="@android:color/holo_blue_dark"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -129,7 +153,12 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:layout_marginBottom="5dp"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:background="@null"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -141,7 +170,12 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:layout_marginBottom="5dp"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:background="@null"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -153,7 +187,12 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:layout_marginBottom="5dp"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:background="@null"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -165,7 +204,12 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:layout_marginBottom="5dp"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:background="@null"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -176,7 +220,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="-"
-                    android:layout_marginBottom="5dp" />
+                    android:layout_marginBottom="5dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_edit_black_24dp"
+                    android:textColor="@android:color/holo_blue_dark"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color1"/>
 
                 <Button
                     android:visibility="gone"

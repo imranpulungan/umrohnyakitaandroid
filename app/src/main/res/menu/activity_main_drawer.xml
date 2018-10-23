@@ -65,15 +65,15 @@
             android:icon="@drawable/ic_menu_reward"
             android:title="Reward" />
 
-        <item
-            android:id="@+id/nav_facilities"
-            android:icon="@drawable/ic_menu_facilities"
-            android:title="Fasilitas" />
+        <!--<item-->
+            <!--android:id="@+id/nav_facilities"-->
+            <!--android:icon="@drawable/ic_menu_facilities"-->
+            <!--android:title="Fasilitas" />-->
 
-        <item
-            android:id="@+id/nav_insentif"
-            android:icon="@drawable/ic_menu_insentif"
-            android:title="Insentif" />
+        <!--<item-->
+            <!--android:id="@+id/nav_insentif"-->
+            <!--android:icon="@drawable/ic_menu_insentif"-->
+            <!--android:title="Insentif" />-->
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_power"

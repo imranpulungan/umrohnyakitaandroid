@@ -156,8 +156,7 @@ public class BinaanKDMFragment extends AppFragment implements iPresenterResponse
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
-//        mAdapter.filter(query);
+        mAdapter.filter(query);
         return false;
     }
 

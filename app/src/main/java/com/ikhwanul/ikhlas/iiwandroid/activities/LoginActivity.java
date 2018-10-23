@@ -25,6 +25,7 @@ import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
 import com.ikhwanul.ikhlas.iiwandroid.core.AppActivity;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.AuthPresenter;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.iPresenterResponse;
+import com.ikhwanul.ikhlas.iiwandroid.ui.ProgressDialogHolder;
 import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class LoginActivity extends AppActivity implements iPresenterResponse, Ad
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialogHolder.with(LoginActivity.this).showLoadingDialog(R.string.loading);
                 Map<String, String> _data = new HashMap<String, String>();
                 _data.put("username", mUsername.getText().toString());
                 _data.put("password",mPassword.getText().toString());
@@ -154,11 +156,13 @@ public class LoginActivity extends AppActivity implements iPresenterResponse, Ad
                 errorInfo.setText("Username atau Password Salah");
                 errorInfo.setVisibility(View.VISIBLE);
             }
+            ProgressDialogHolder.with(this).dismissDialog();
         }
     }
 
     @Override
     public void doValidationError(boolean error) {
+        ProgressDialogHolder.with(this).dismissDialog();
     }
 
     @Override
@@ -167,6 +171,5 @@ public class LoginActivity extends AppActivity implements iPresenterResponse, Ad
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

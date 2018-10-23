@@ -18,6 +18,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/layout_rainbow"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" />
                 <ImageView
                     android:layout_margin="10dp"
                     android:id="@+id/img_perwakilan"

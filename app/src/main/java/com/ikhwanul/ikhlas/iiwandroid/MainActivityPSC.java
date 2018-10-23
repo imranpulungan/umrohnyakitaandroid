@@ -29,6 +29,7 @@ import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiBuyStokFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiFreeFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiJamaahFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCKwitansiPerwakilanFragment;
+import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCLaporanFragment;
 import com.ikhwanul.ikhlas.iiwandroid.fragmentpsc.PSCPerwakilanFragment;
 import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
@@ -139,6 +140,9 @@ public class MainActivityPSC extends AppCompatActivity
             }else if(id == R.id.nav_komisi){
                 setTitle("Data Komisi Rekomendasi");
                 fragmentContent = PSCKomisiRekomendasiFragment.newInstance();
+            }else if(id== R.id.nav_laporan){
+                setTitle("Data Laporan");
+                fragmentContent = PSCLaporanFragment.newInstance();
             }else if(id == R.id.nav_logout){
                 if (dataUser != null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);

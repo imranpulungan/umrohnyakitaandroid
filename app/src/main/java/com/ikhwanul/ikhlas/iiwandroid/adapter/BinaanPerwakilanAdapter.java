@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,9 +46,11 @@ public class BinaanPerwakilanAdapter extends
         public TextView textPhoneItem;
         public ImageView imgIcon;
         private ImageButton imgbtnCall;
+        private LinearLayout layoutRainbow;
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             imgIcon = (ImageView) view.findViewById(R.id.img_perwakilan);
             imgbtnCall = (ImageButton) view.findViewById(R.id.imgbtn_call);
             textIdItem = (TextView) view.findViewById(R.id.tv_id_perwakilan);
@@ -65,10 +68,17 @@ public class BinaanPerwakilanAdapter extends
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+
         final Binaan dataBinaan = binaanList.get(position);
         holder.textIdItem.setText(dataBinaan.getId_perwakilan());
         holder.textNameItem.setText(dataBinaan.getNama_lengkap());
         holder.textPhoneItem.setText(dataBinaan.getNo_telpon());
+
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
 
         holder.imgbtnCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +94,7 @@ public class BinaanPerwakilanAdapter extends
                     .placeholder(R.drawable.ic_menu_profile)
                     .into(holder.imgIcon);
         }
+
     }
 
     private void makeCall(String phoneNumber){
