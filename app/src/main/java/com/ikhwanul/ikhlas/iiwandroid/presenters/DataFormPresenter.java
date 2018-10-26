@@ -284,6 +284,8 @@ public class DataFormPresenter extends Presenter {
         });
     }
 
+
+
     public void sellKwitansi(Map<String, String> data) {
         ApiClient.getInstance(context).getApi().sellKwitansi(data).enqueue(new Callback<ApiResponse>() {
             @Override
@@ -313,6 +315,28 @@ public class DataFormPresenter extends Presenter {
                 try {
                     if (response.isSuccessful()){
                         presenterresponse.doSuccess(response.body(), UPDATE_PROFILE_PERWAKILAN);
+                    }else{
+                        handleError(response.errorBody(), response.code());
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                DataFormPresenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getPerwakilanByCode(Map<String, String> data) {
+        ApiClient.getInstance(context).getApi().getPerwakilanByCode(data).enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        presenterresponse.doSuccess(response.body(), GET_DATA_PERWAKILAN_BY_CODE);
                     }else{
                         handleError(response.errorBody(), response.code());
                     }

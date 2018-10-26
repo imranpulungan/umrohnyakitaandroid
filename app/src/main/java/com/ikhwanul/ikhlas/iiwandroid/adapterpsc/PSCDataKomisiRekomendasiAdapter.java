@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ikhwanul.ikhlas.iiwandroid.R;
@@ -32,9 +33,11 @@ public class PSCDataKomisiRekomendasiAdapter extends
         public TextView textRekomendasi;
         public TextView textKontrakAkhir;
         public TextView textStatus;
+        public LinearLayout layoutRainbow;
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             textIdItem = (TextView) view.findViewById(R.id.tv_id);
             textNameItem = (TextView) view.findViewById(R.id.tv_nama_lengkap);
             textRekomendasi = (TextView) view.findViewById(R.id.tv_rekomendasi);
@@ -58,6 +61,18 @@ public class PSCDataKomisiRekomendasiAdapter extends
         holder.textRekomendasi.setText(dataPerwakilan.getKeterangan());
         holder.textKontrakAkhir.setText(dataPerwakilan.getBln_tahun());
         holder.textStatus.setText(dataPerwakilan.getStatus());
+
+        if (dataPerwakilan.getStatus().equals("Sudah Diklaim")){
+            holder.textStatus.setBackgroundResource(R.drawable.background_with_radius4);
+        }else{
+            holder.textStatus.setBackgroundResource(R.drawable.background_with_radius2);
+        }
+
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
     }
 
     public void filter(String charText) {

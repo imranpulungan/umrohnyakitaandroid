@@ -1,6 +1,6 @@
 <resources>
     <string name="assalamualaikum">السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</string>
-    <string name="app_name">IIWAndroid</string>
+    <string name="app_name">Umrohnya Kita</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -50,8 +50,8 @@
     <string name="prompt_keterangan">Keterangan</string>
     <string name="desc_sudah_mengisi">Saya telah mengisi data dengan sebenar-benarnya</string>
     <string name="jabatan_perwakilan">Jabatan\nPERWAKILAN</string>
-    <string name="jabatan_perwakilan_kdm">Jabatan\nPERWAKILAN-KDM</string>
-    <string name="jabatan_perwakilan_mm">Jabatan\nPERWAKILAN-MM</string>
+    <string name="jabatan_perwakilan_kdm">Jabatan\nKDM</string>
+    <string name="jabatan_perwakilan_mm">Jabatan\nPMM</string>
     <string name="copyright"> © 2018 PT. Ikhwanul Ikhlas Wisata</string>
     <string name="channel_psc">Channel PSC</string>
     <string name="kontrak_berakhir">Berakhir Kontrak</string>

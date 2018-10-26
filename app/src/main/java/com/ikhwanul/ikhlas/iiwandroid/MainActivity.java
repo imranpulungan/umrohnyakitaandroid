@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        setTitle("Umrohnya Kita");
 
         FragmentTransaction frgManager = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         if (selectedMenu != id){
             selectedMenu = id;
             if (id == R.id.nav_home) {
-                setTitle("Home");
+                setTitle("Umrohnya Kita");
                 fragmentContent = new HomeFragment();
             }else if (id == R.id.nav_commision) {
                 boolean b= !m.findItem(R.id.nav_commission_vice).isVisible();

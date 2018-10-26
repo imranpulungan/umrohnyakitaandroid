@@ -65,7 +65,7 @@ public class KomisiPelunasanAdapter extends
         holder.tvNamaJamaah.setText(dataKomisi.getNama_jamaah());
         holder.tvJumlah.setText(FormatRupiah.useFormat(dataKomisi.getJumlah()));
         holder.tvTanggalKomisi.setText(dataKomisi.getTgl_dibuat());
-        holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diclaim": "Belum diclaim");
+        holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diklaim": "Belum diklaim");
     }
 
     public void filter(String charText) {

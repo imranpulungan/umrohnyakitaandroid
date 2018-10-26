@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +44,11 @@ public class PSCDataPerwakilanAdapter extends
         public TextView textRekomendasi;
         public TextView textKontrakAkhir;
         public TextView textStatus;
+        public LinearLayout layoutRainbow;
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             textIdItem = (TextView) view.findViewById(R.id.tv_id);
             textNameItem = (TextView) view.findViewById(R.id.tv_nama_lengkap);
             textRekomendasi = (TextView) view.findViewById(R.id.tv_rekomendasi);
@@ -70,13 +73,25 @@ public class PSCDataPerwakilanAdapter extends
         holder.textKontrakAkhir.setText(dataPerwakilan.getTgl_berakhir());
         holder.textStatus.setText(dataPerwakilan.getStatus());
 
+        if (dataPerwakilan.getStatus().equals("Aktif")){
+            holder.textStatus.setBackgroundResource(R.drawable.background_with_radius2);
+        }else{
+            holder.textStatus.setBackgroundResource(R.drawable.background_with_radius4);
+        }
+
+
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PSCDetailPerwakilanActivity.class);
                 intent.putExtra("id", Integer.valueOf(dataPerwakilan.getId_perwakilan()));
                 context.startActivity(intent);
-
             }
         });
     }

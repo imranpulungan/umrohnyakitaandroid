@@ -29,17 +29,20 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ikhwanul.ikhlas.iiwandroid.BuildConfig;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.activities.RegistrationRegulerActivity;
 import com.ikhwanul.ikhlas.iiwandroid.adapter.HomeInfoAdapter;
 import com.ikhwanul.ikhlas.iiwandroid.adapter.JamaahAdapter;
 import com.ikhwanul.ikhlas.iiwandroid.adapterpsc.PSCDataPenjualanKwitansiAdapter;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.BannerResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.DollarResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.JamaahResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.KDMBelanjaResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.PSCDataJualKwitansiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.core.AppFragment;
+import com.ikhwanul.ikhlas.iiwandroid.entities.Banner;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Dollar;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
 import com.ikhwanul.ikhlas.iiwandroid.entities.KDMBelanja;
@@ -48,6 +51,7 @@ import com.ikhwanul.ikhlas.iiwandroid.entities.User;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.iPresenterResponse;
 import com.ikhwanul.ikhlas.iiwandroid.utils.FormatRupiah;
+import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
@@ -71,6 +75,7 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
     private RecyclerView rvInfo;
     private List<PSCDataJualKwitansi> dataPerwakilanPSC;
     private List<Jamaah> dataJamaah;
+    private List<Banner> dataBanner;
     protected LinearLayout layoutBottomSheet, layoutInfoPSC, layoutInfoPerwakilan, layoutInsufficent;
     ProgressDialog progressDialog;
 
@@ -113,7 +118,7 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
         initView();
         initObject();
         initEvent();
-        attachData();
+//        attachData();
 
 
         return view;
@@ -127,15 +132,7 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
         }else{
             mPresenter.getKdmBelanja(dataUser.id_perwakilan, dataUser.peringkat);
         }
-        ImageListener imageListener = new ImageListener() {
-            @Override
-            public void setImageForPosition(int position, ImageView imageView) {
-                imageView.setImageResource(sampleImages[position]);
-            }
-        };
-
-        carouselView.setPageCount(sampleImages.length);
-        carouselView.setImageListener(imageListener);
+        mPresenter.getSlide();
     }
 
     private void attachData() {
@@ -160,6 +157,21 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
             mPresenter.getPenjualanKwitansi(Integer.valueOf(dataUser.id_perwakilan), progressDialog, false, 0);
             tvTitleList.setText("Data Penjualan Terakhir");
         }
+
+        ImageListener imageListener = new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                if (dataBanner.get(position).getGambar() != null){
+                    Log.d("IMG", BuildConfig.API_URL+"images_info/images_slide/"+ dataBanner.get(position).getGambar());
+                    Picasso.with(getContext())
+                            .load(BuildConfig.API_URL+"images_info/images_slide/"+ dataBanner.get(position).getGambar())
+                            .into(imageView);
+                }
+            }
+        };
+
+        carouselView.setImageListener(imageListener);
+        carouselView.setPageCount(dataBanner.size());
     }
 
     protected void initView(){
@@ -310,6 +322,9 @@ public class HomeFragment extends AppFragment implements iPresenterResponse{
                 rvDataPerwakilan.setVisibility(View.GONE);
                 layoutInsufficent.setVisibility(View.VISIBLE);
             }
+        }else if(tag.equals(Presenter.RES_GET_BANNER)){
+            dataBanner = ((BannerResponse) response).slide;
+            attachData();
         }
     }
 

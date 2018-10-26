@@ -59,7 +59,7 @@ public class MainActivityMM extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        setTitle("Home (MM)");
+        setTitle("Umrohnya Kita");
         FragmentTransaction frgManager = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         fragmentContent = new HomeFragment();

@@ -2,16 +2,11 @@ package com.ikhwanul.ikhlas.iiwandroid.adapter;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -19,20 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ikhwanul.ikhlas.iiwandroid.MainActivity;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.activities.DetailJamaahActivity;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
-import com.ikhwanul.ikhlas.iiwandroid.ui.ProgressDialogHolder;
-import com.ikhwanul.ikhlas.iiwandroid.utils.FileDownloader;
 import com.ikhwanul.ikhlas.iiwandroid.utils.PDFTools;
-import com.ikhwanul.ikhlas.iiwandroid.utils.Session;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -58,8 +48,10 @@ public class JamaahAdapter extends
         public TextView tvHarga;
         private ImageButton imgbtnCall;
         private ImageButton imgbtnDownload;
+        private LinearLayout layoutRainbow;
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             tvHarga = (TextView) view.findViewById(R.id.tv_harga);
             tvDateGo = (TextView) view.findViewById(R.id.tv_date_go);
             tvNameJamaah = (TextView) view.findViewById(R.id.tv_name_jamaah);
@@ -89,6 +81,13 @@ public class JamaahAdapter extends
         holder.tvNameJamaah.setText(dataJamaah.getNama_jamaah());
         holder.tvDateGo.setText(dataJamaah.getTgl_berangkat());
 
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
+
+
         if (isHistory){
             holder.imgbtnDownload.setVisibility(View.GONE);
         }
@@ -112,19 +111,9 @@ public class JamaahAdapter extends
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
                                 PDFTools.showPDFUrl(context, "https://ikhwanulikhlaswisata.com/perwakilan/pdf/pdf.php?page=jamaahwithandroid&id=" + dataJamaah.getId_pendaftaraan());
                             }
                         });
-                builder.setNegativeButton("Batal",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                            }
-                        }
-                );
-                builder.setCancelable(false);
-
                 android.support.v7.app.AlertDialog dialog = builder.create();
                 dialog.show();
             }
@@ -178,47 +167,5 @@ public class JamaahAdapter extends
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_item_jamaah, parent, false);
         return new MyViewHolder(v);
-    }
-
-    public void download(View v)
-    {
-        new DownloadFile().execute("http://maven.apache.org/maven-1.x/maven.pdf", "maven.pdf");
-    }
-
-    public void view(View v)
-    {
-        File pdfFile = new File(Environment.getExternalStorageDirectory() + "/testthreepdf/" + "maven.pdf");  // -> filename = maven.pdf
-        Uri path = Uri.fromFile(pdfFile);
-        Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-        pdfIntent.setDataAndType(path, "application/pdf");
-        pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        try{
-            context.startActivity(pdfIntent);
-        }catch(ActivityNotFoundException e){
-            Toast.makeText(context, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private class DownloadFile extends AsyncTask<String, Void, Void>{
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
-            String fileName = strings[1];  // -> maven.pdf
-            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-            File folder = new File(extStorageDirectory, "testthreepdf");
-            folder.mkdir();
-
-            File pdfFile = new File(folder, fileName);
-
-            try{
-                pdfFile.createNewFile();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-            FileDownloader.downloadFile(fileUrl, pdfFile);
-            return null;
-        }
     }
 }

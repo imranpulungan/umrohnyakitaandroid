@@ -2,21 +2,26 @@ package com.ikhwanul.ikhlas.iiwandroid.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
 import com.ikhwanul.ikhlas.iiwandroid.core.AppActivity;
+import com.ikhwanul.ikhlas.iiwandroid.entities.User;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.DataFormPresenter;
 import com.ikhwanul.ikhlas.iiwandroid.presenters.iPresenterResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.GET_DATA_PERWAKILAN_BY_CODE;
 import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.GET_STOK_KWITANSI;
 import static com.ikhwanul.ikhlas.iiwandroid.presenters.Presenter.SHARE_KWITANSI;
 
@@ -24,10 +29,14 @@ public class PSCBeriKwitansiActivity extends AppActivity implements iPresenterRe
 {
 
     DataFormPresenter mPresenter;
-    private TextView tvHeader, tvMyStock;
+    private TableLayout detailInfo;
+    private TextView tvHeader, tvMyStock, tvKodeOrId, tvNamaLengkap, tvNoTelp, tvAlamat;
     private EditText editKodePerwakilan, editJlhKwitansi, editKeterangan;
     private Button btnSave;
     int id;
+
+    User dataUser;
+
 
     public PSCBeriKwitansiActivity() {
         super(R.layout.activity_pscberi_kwitansi, true);
@@ -56,6 +65,19 @@ public class PSCBeriKwitansiActivity extends AppActivity implements iPresenterRe
                 mPresenter.shareKwitansi(data);
             }
         });
+
+        editKodePerwakilan.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("kode_perwakilan", editKodePerwakilan.getText().toString());
+                    mPresenter.getPerwakilanByCode(data);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     private void attachData() {
@@ -68,24 +90,41 @@ public class PSCBeriKwitansiActivity extends AppActivity implements iPresenterRe
     }
 
     private void initView() {
-        btnSave = (Button) findViewById(R.id.btn_save);
+        detailInfo = (TableLayout) findViewById(R.id.detail_info);
         editKodePerwakilan = (EditText) findViewById(R.id.edit_kode_perwakilan);
         editJlhKwitansi = (EditText) findViewById(R.id.edit_jlh_kwitansi);
         editKeterangan = (EditText) findViewById(R.id.edit_keterangan);
         tvMyStock = (TextView) findViewById(R.id.tv_my_stock);
         tvHeader = (TextView) findViewById(R.id.tv_header);
+        tvAlamat = (TextView) findViewById(R.id.tv_alamat);
+        tvNoTelp = (TextView) findViewById(R.id.tv_no_telp);
+        tvNamaLengkap = (TextView) findViewById(R.id.tv_nama_lengkap);
+        tvKodeOrId = (TextView) findViewById(R.id.tv_kode_or_id);
+        btnSave = (Button) findViewById(R.id.btn_save);
     }
 
     @Override
     public void doSuccess(ApiResponse response, String tag) {
         if (tag.equals(GET_STOK_KWITANSI)){
             tvMyStock.setText("Jumlah Stok Kwitansi Free anda "+ response.message);
-        }
-        if (tag.equals(SHARE_KWITANSI)){
+        }else if (tag.equals(SHARE_KWITANSI)){
             Toast.makeText(this, response.message, Toast.LENGTH_LONG).show();
             if (!response.error){
                 onBackPressed();
             }
+        }else if(tag.equals(GET_DATA_PERWAKILAN_BY_CODE)){
+            if (!response.error){
+                dataUser = ((AuthResponse)response).user;
+                if (dataUser != null){
+                    tvNamaLengkap.setText(dataUser.nama_lengkap);
+                    tvNoTelp.setText(dataUser.no_telpon);
+                    tvAlamat.setText(dataUser.alamat);
+                    detailInfo.setVisibility(View.VISIBLE);
+                }else
+                    detailInfo.setVisibility(View.GONE);
+            }else
+                detailInfo.setVisibility(View.GONE);
+
         }
     }
 

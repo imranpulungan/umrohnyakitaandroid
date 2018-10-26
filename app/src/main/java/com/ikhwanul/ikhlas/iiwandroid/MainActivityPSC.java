@@ -56,7 +56,7 @@ public class MainActivityPSC extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        setTitle("Home (PSC)");
+        setTitle("Umrohnya Kita");
         FragmentTransaction frgManager = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         fragmentContent = new HomeFragment();
@@ -107,7 +107,7 @@ public class MainActivityPSC extends AppCompatActivity
         if (selectedMenu != id){
             selectedMenu = id;
             if (id == R.id.nav_dashboard) {
-                setTitle("Home (PSC)");
+                setTitle("Umrohnya Kita");
                 fragmentContent = new HomeFragment();
             }else if (id == R.id.nav_data_perwakilan) {
                 setTitle("Data Perwakilan");
@@ -120,7 +120,7 @@ public class MainActivityPSC extends AppCompatActivity
                 boolean b = !m.findItem(R.id.nav_data_kwitansi_perwakilan).isVisible();
                 //setting submenus visible state
                 m.findItem(R.id.nav_data_kwitansi_perwakilan).setVisible(b);
-                m.findItem(R.id.nav_data_kwitansi_jamaah).setVisible(b);
+//                m.findItem(R.id.nav_data_kwitansi_jamaah).setVisible(b);
                 return false;
             }else if (id == R.id.nav_data_kwitansi_perwakilan) {
                 setTitle("Data Kwitansi Perwakilan");

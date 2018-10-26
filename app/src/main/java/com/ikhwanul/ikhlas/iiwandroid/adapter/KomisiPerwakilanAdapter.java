@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ikhwanul.ikhlas.iiwandroid.BuildConfig;
@@ -39,10 +40,12 @@ public class KomisiPerwakilanAdapter extends
         public TextView tvTanggalKomisi;
         public TextView tvStatusKomisi;
         public ImageView imgPerwakilan;
+        public LinearLayout layoutRainbow;
 
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             imgPerwakilan = (ImageView) view.findViewById(R.id.img_perwakilan);
             tvNamaPerwakilan = (TextView) view.findViewById(R.id.tv_nama_perwakilan);
             tvIdPerwakilan = (TextView) view.findViewById(R.id.tv_id_perwakilan);
@@ -68,10 +71,16 @@ public class KomisiPerwakilanAdapter extends
         holder.tvJumlah.setText(FormatRupiah.useFormat(dataKomisi.getJumlah()));
         holder.tvTanggalKomisi.setText(dataKomisi.getTgl_dibuat());
         holder.tvStatusKomisi.setText(dataKomisi.getStatus().equals("1")? "Sudah diklaim": "Belum diklaim");
-        if (!dataKomisi.getStatus().equals("1")){
-            holder.tvStatusKomisi.setBackgroundResource(R.color.colorPrimary);
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
         }else{
-            holder.tvStatusKomisi.setBackgroundResource(R.color.colorDanger);
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
+
+        if (Integer.valueOf(dataKomisi.getStatus()) == 1){
+            holder.tvStatusKomisi.setBackgroundResource(R.drawable.background_with_radius4);
+        }else{
+            holder.tvStatusKomisi.setBackgroundResource(R.drawable.background_with_radius2);
         }
 
         holder.tvIdPerwakilan.setVisibility(View.GONE);
@@ -98,7 +107,7 @@ public class KomisiPerwakilanAdapter extends
             komisiPerwakilanList.addAll(arraylist);
         } else {
             for (Komisi wp : arraylist) {
-                if (wp.getId_komisi().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (wp.getNama_lengkap().toLowerCase(Locale.getDefault()).contains(charText)) {
                     komisiPerwakilanList.add(wp);
                 }
             }

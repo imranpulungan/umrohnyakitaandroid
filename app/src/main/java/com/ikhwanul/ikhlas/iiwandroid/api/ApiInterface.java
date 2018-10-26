@@ -2,6 +2,7 @@ package com.ikhwanul.ikhlas.iiwandroid.api;
 
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.BannerResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanKDMResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.CalonPerwakilanResponse;
@@ -205,6 +206,9 @@ public interface ApiInterface {
     @POST("Api.php?apicall=getstokkwitansi")
     Call<ApiResponse> getStokkwitansi(@Body Map<String, Integer> data);
 
+    @POST("Api.php?apicall=getstokkwitansireguler")
+    Call<ApiResponse> getStokkwitansiReguler(@Body Map<String, Integer> data);
+
     @POST("Api.php?apicall=berikwitansifree")
     Call<ApiResponse> shareKwitansi(@Body Map<String, String> data);
 
@@ -223,6 +227,11 @@ public interface ApiInterface {
     @POST("Api.php?apicall=laporan-pembelian")
     Call<LaporanPembelianResponse> getLaporanPembelian(@Body Map<String, String> data);
 
+    @POST("Api.php?apicall=slide")
+    Call<BannerResponse> getSlide();
+
+    @POST("Api.php?apicall=perwakilanbycode")
+    Call<AuthResponse> getPerwakilanByCode(@Body Map<String, String> data);
 
 //
 //    @POST("v1/decorder")

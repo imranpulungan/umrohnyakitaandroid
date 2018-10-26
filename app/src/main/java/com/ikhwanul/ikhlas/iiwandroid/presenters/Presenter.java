@@ -8,6 +8,7 @@ import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.api.ApiClient;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.ApiResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.AuthResponse;
+import com.ikhwanul.ikhlas.iiwandroid.api.response.BannerResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanKDMResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.BinaanResponse;
 import com.ikhwanul.ikhlas.iiwandroid.api.response.DPResponse;
@@ -80,6 +81,8 @@ public class Presenter extends MainActivity {
     public static final String RES_GET_ALL_GROUP = "get_all_group";
     public static final String RES_GET_DETAIL_JAMAAH = "get_detail_jamaah";
     public static final String RES_GET_LAPORAN_PEMBELIAN = "get_laporan_pembelian";
+    public static final String RES_GET_BANNER = "get_slide_banner";
+    public static final String GET_DATA_PERWAKILAN_BY_CODE = "get_data_perwakilan";
 
 
     protected static Context context;
@@ -956,6 +959,26 @@ public class Presenter extends MainActivity {
             }
             @Override
             public void onFailure(Call<LaporanPembelianResponse> call, Throwable t) {
+                Presenter.this.onFailure(t);
+            }
+        });
+    }
+
+    public void getSlide() {
+        ApiClient.getInstance(context).getApi().getSlide().enqueue(new Callback<BannerResponse>() {
+            @Override
+            public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
+                try {
+                    if (response.isSuccessful())
+                        presenterresponse.doSuccess(response.body(), RES_GET_BANNER);
+                    else handleError(response.errorBody(), response.code());
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<BannerResponse> call, Throwable t) {
                 Presenter.this.onFailure(t);
             }
         });

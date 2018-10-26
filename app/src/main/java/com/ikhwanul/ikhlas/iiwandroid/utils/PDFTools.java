@@ -33,9 +33,7 @@ public class PDFTools {
     private static final String PDF_MIME_TYPE = "application/pdf";
     private static final String HTML_MIME_TYPE = "text/html";
 
-
     public static void showPDFUrl(final Context context, final String pdfUrl) {
-        ProgressDialogHolder.with(context).showLoadingDialog(R.string.loading);
         if (isPDFSupported(context)) {
             downloadAndOpenPDF(context, pdfUrl);
         } else {
@@ -46,8 +44,8 @@ public class PDFTools {
 
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public static void downloadAndOpenPDF(final Context context, final String pdfUrl) {
-        // Get filename
-        //final String filename = pdfUrl.substring( pdfUrl.lastIndexOf( "/" ) + 1 );
+        final ProgressDialog progress = ProgressDialog.show( context, null,"Loading..." );
+
         String filename = "";
         try {
             filename = new GetFileInfo().execute(pdfUrl).get();
@@ -62,12 +60,12 @@ public class PDFTools {
         if (tempFile.exists()) {
             // If we have downloaded the file before, just go ahead and show it.
             openPDF(context, Uri.fromFile(tempFile));
-            ProgressDialogHolder.with(context).dismissDialog();
+            progress.dismiss();
             return;
         }
 
         // Show progress dialog while downloading
-//        final ProgressDialog progress = ProgressDialog.show(context, context.getString(R.string.pdf_show_local_progress_title), context.getString(R.string.pdf_show_local_progress_content), true);
+
 
         // Create the download request
         DownloadManager.Request r = new DownloadManager.Request(Uri.parse(pdfUrl));
@@ -76,8 +74,12 @@ public class PDFTools {
         BroadcastReceiver onComplete = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                ProgressDialogHolder.with(context).dismissDialog();
+                if (!progress.isShowing()) {
+                    return;
+                }
                 context.unregisterReceiver(this);
+
+                progress.dismiss();
                 long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
                 Cursor c = dm.query(new DownloadManager.Query().setFilterById(downloadId));
 
@@ -91,14 +93,22 @@ public class PDFTools {
             }
         };
         context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-
-        // Enqueue the request
         dm.enqueue(r);
     }
 
 
     public static void askToOpenPDFThroughGoogleDrive(final Context context, final String pdfUrl) {
-        ProgressDialogHolder.with(context).dismissDialog();
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.pdf_show_online_dialog_title)
+                .setMessage(R.string.pdf_show_online_dialog_question)
+                .setNegativeButton(R.string.pdf_show_online_dialog_button_no, null)
+                .setPositiveButton(R.string.pdf_show_online_dialog_button_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        openPDFThroughGoogleDrive(context, pdfUrl);
+                    }
+                })
+                .show();
     }
 
     public static void openPDFThroughGoogleDrive(final Context context, final String pdfUrl) {
@@ -136,7 +146,7 @@ public class PDFTools {
                     String depoSplit[] = depo.split("filename=");
                     filename = depoSplit[1].replace("filename=", "").replace("\"", "").trim();
                 } else {
-                    filename = "downloadsas.pdf";
+                    filename = "download.pdf";
                 }
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();

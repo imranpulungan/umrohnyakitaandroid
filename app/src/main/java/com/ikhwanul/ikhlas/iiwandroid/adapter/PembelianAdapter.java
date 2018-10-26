@@ -5,10 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.entities.Pembelian;
+import com.ikhwanul.ikhlas.iiwandroid.utils.DateUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -30,9 +33,11 @@ public class PembelianAdapter extends
         public TextView tvDateTransaction;
         public TextView tvJumlahKwitansi;
         public TextView tvJenisPaket;
+        public LinearLayout layoutRainbow;
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             tvNoTransaksi = (TextView) view.findViewById(R.id.tv_no_transaksi);
             tvDateTransaction = (TextView) view.findViewById(R.id.tv_date_transaction);
             tvJumlahKwitansi = (TextView) view.findViewById(R.id.tv_jumlah_kwitansi);
@@ -53,8 +58,14 @@ public class PembelianAdapter extends
 
         holder.tvNoTransaksi.setText(dataPembelian.getNo_transaksi());
         holder.tvJumlahKwitansi.setText(dataPembelian.getJumlah());
-        holder.tvDateTransaction.setText(dataPembelian.getTgl_dibuat());
+        holder.tvDateTransaction.setText(DateUtils.format(dataPembelian.getTgl_dibuat()));
         holder.tvJenisPaket.setText("PPC");
+
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override

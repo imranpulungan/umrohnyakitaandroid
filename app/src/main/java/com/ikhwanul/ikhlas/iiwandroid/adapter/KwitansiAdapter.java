@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ikhwanul.ikhlas.iiwandroid.R;
@@ -33,9 +34,11 @@ public class KwitansiAdapter extends
         public TextView tvNoKwitansi;
         public TextView tvSudahBelum;
         public TextView tvStatus;
+        public LinearLayout layoutRainbow;
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             tvNoKwitansi = (TextView) view.findViewById(R.id.tv_no_kwitansi);
             tvNoTransaksi = (TextView) view.findViewById(R.id.tv_no_transaksi);
             tvSudahBelum= (TextView) view.findViewById(R.id.tv_sudah_belum);
@@ -55,10 +58,21 @@ public class KwitansiAdapter extends
         final Kwitansi dataKwitansi = kwitansiList.get(position);
         int jenis_kwitansi = Integer.valueOf(dataKwitansi.getJenis_kwitansi());
         String jenis_kw = "-";
-        holder.tvNoKwitansi.setText(dataKwitansi.getNo_kwitansi());
+        holder.tvNoKwitansi.setText("No. Kwitansi : " + dataKwitansi.getNo_kwitansi());
         holder.tvNoTransaksi.setText(dataKwitansi.getNo_transaksi());
         holder.tvSudahBelum.setText(dataKwitansi.getStatus_guna().equals("0")? "Belum digunakan" : "Sudah digunakan");
 
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
+
+        if (dataKwitansi.getStatus_guna().equals("1")){
+            holder.tvSudahBelum.setBackgroundResource(R.drawable.background_with_radius4);
+        }else{
+            holder.tvSudahBelum.setBackgroundResource(R.drawable.background_with_radius2);
+        }
         if(jenis_kwitansi <= 0){
             jenis_kw = "Free";
         }else if(jenis_kwitansi <=1){

@@ -402,7 +402,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:background="@drawable/background_with_radius_border1"/>
+                            android:background="@drawable/background_with_radius_border1"
+                            android:inputType="textCapCharacters"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -428,7 +429,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:background="@drawable/background_with_radius_border1" />
+                            android:background="@drawable/background_with_radius_border1"
+                            android:inputType="textCapCharacters"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -455,6 +457,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="number"
                         android:background="@drawable/background_with_radius_border1" />
                     <TextView
                         android:layout_width="match_parent"
@@ -532,6 +535,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
 
@@ -551,6 +555,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
 
@@ -571,6 +576,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                     <TextView
                         android:layout_width="match_parent"
@@ -701,6 +707,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
                 <LinearLayout
@@ -719,6 +726,7 @@
                         android:id="@+id/edit_pendidikan_terakhir"
                         android:hint="@string/form_pendidikan_terakhir"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
                 <LinearLayout
@@ -755,6 +763,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
                 <LinearLayout
@@ -773,6 +782,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
                 <LinearLayout
@@ -791,6 +801,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="number"
                         android:background="@drawable/background_with_radius_border1"/>
                 </LinearLayout>
                 <LinearLayout
@@ -809,6 +820,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textCapCharacters"
                         android:background="@drawable/background_with_radius_border1" />
                 </LinearLayout>
 
@@ -852,6 +864,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:inputType="textCapCharacters"
                             android:background="@drawable/background_with_radius_border1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -878,6 +891,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:inputType="number"
                             android:background="@drawable/background_with_radius_border1" />
                     </LinearLayout>
 
@@ -925,6 +939,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:inputType="textCapCharacters"
                             android:background="@drawable/background_with_radius_border1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -951,6 +966,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:inputType="textCapCharacters"
                             android:background="@drawable/background_with_radius_border1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -969,7 +985,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/prompt_alamat"
+                            android:text="@string/prompt_keterangan"
                             android:padding="5dp"/>
                         <EditText
                             android:id="@+id/edit_keterangan_kerabat"
@@ -979,6 +995,7 @@
                             android:padding="10dp"
                             android:minLines="3"
                             android:gravity="top"
+                            android:inputType="textCapCharacters"
                             android:background="@drawable/background_with_radius_border1" />
                         <TextView
                             android:layout_width="match_parent"

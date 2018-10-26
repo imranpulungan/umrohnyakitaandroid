@@ -163,7 +163,6 @@ public class BinaanPerwakilanFragment extends AppFragment implements iPresenterR
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
         mAdapter.filter(query);
         return false;
     }

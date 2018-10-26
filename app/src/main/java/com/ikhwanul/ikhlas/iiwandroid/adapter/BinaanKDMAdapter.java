@@ -9,17 +9,20 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ikhwanul.ikhlas.iiwandroid.BuildConfig;
 import com.ikhwanul.ikhlas.iiwandroid.R;
 import com.ikhwanul.ikhlas.iiwandroid.entities.BinaanKDM_MM;
+import com.ikhwanul.ikhlas.iiwandroid.entities.Jamaah;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,9 +46,11 @@ public class BinaanKDMAdapter extends
         public TextView textPhoneItem;
         public ImageView imgIcon;
         private ImageButton imgbtnCall;
+        private LinearLayout layoutRainbow;
 
         public MyViewHolder(View view) {
             super(view);
+            layoutRainbow = (LinearLayout) view.findViewById(R.id.layout_rainbow);
             imgIcon = (ImageView) view.findViewById(R.id.img_perwakilan);
             imgbtnCall = (ImageButton) view.findViewById(R.id.imgbtn_call);
             textIdItem = (TextView) view.findViewById(R.id.tv_id_perwakilan);
@@ -68,6 +73,12 @@ public class BinaanKDMAdapter extends
         holder.textNameItem.setText(dataBinaan.getNama_lengkap());
         holder.textPhoneItem.setText(dataBinaan.getNo_telpon());
 
+        if (position % 2 ==0){
+            holder.layoutRainbow.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.layoutRainbow.setBackgroundResource(R.color.colorOrangeHolo);
+        }
+
         holder.imgbtnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,12 +87,15 @@ public class BinaanKDMAdapter extends
             }
         });
 
-        if (!dataBinaan.getFoto().equals("") || dataBinaan.getFoto() != null){
-            Picasso.with(context)
-                    .load(BuildConfig.API_URL+"images_info/images_member/crop_mini/"+dataBinaan.getFoto())
-                    .placeholder(R.drawable.ic_menu_profile)
-                    .into(holder.imgIcon);
+        if (dataBinaan != null){
+            if (!dataBinaan.getFoto().equals("") || dataBinaan.getFoto() != null){
+                Picasso.with(context)
+                        .load(BuildConfig.API_URL+"images_info/images_member/crop_mini/"+dataBinaan.getFoto())
+                        .placeholder(R.drawable.ic_menu_profile)
+                        .into(holder.imgIcon);
+            }
         }
+
     }
 
     private void makeCall(String phoneNumber){
@@ -104,9 +118,8 @@ public class BinaanKDMAdapter extends
             binaanList.addAll(arraylist);
         } else {
             for (BinaanKDM_MM wp : arraylist) {
-                if (wp.getNama_lengkap().toLowerCase(Locale.getDefault()).contains(charText)) {
+                if(wp.getNama_lengkap().toLowerCase(Locale.getDefault()).contains(charText))
                     binaanList.add(wp);
-                }
             }
         }
         notifyDataSetChanged();

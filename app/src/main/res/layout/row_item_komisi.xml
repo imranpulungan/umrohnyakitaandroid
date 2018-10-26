@@ -17,6 +17,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/layout_rainbow"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
                 <ImageView
                     android:id="@+id/img_perwakilan"
                     android:layout_margin="10dp"
@@ -80,8 +84,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:background="@drawable/background_with_radius_border1"
-                        android:backgroundTint="@color/colorPrimary"
                         android:textColor="@android:color/white"
                         android:padding="5dp"
                         android:gravity="center"/>

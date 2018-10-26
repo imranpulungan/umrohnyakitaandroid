@@ -59,7 +59,7 @@ public class MainActivityKDM extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        setTitle("Home (KDM)");
+        setTitle("Umrohnya Kita");
         FragmentTransaction frgManager = getSupportFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         fragmentContent = new HomeFragment();
@@ -104,7 +104,7 @@ public class MainActivityKDM extends AppCompatActivity
         int id = item.getItemId();
         Menu m = navigationView.getMenu();
         if (id == R.id.nav_home) {
-            setTitle("Home (KDM)");
+            setTitle("Umrohnya Kita");
             fragmentContent = new HomeFragment();
         }else if (id == R.id.nav_commision) {
             boolean b= !m.findItem(R.id.nav_commission_vice).isVisible();
@@ -118,7 +118,7 @@ public class MainActivityKDM extends AppCompatActivity
             setTitle("Komisi PSC");
             fragmentContent = KomisiPSCFragment.newInstance();
         }else if(id == R.id.nav_commission_vice){
-            setTitle("Komisi Data Perwakilan");
+            setTitle("Komisi Perwakilan");
             fragmentContent = KomisiPerwakilanFragment.newInstance();
         }else if (id == R.id.nav_profile){
             setTitle("Profile");
