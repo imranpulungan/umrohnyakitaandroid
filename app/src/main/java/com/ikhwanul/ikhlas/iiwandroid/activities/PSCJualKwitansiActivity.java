@@ -55,12 +55,25 @@ public class PSCJualKwitansiActivity extends AppActivity implements iPresenterRe
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> data = new HashMap<>();
-                data.put("id_perwakilan_psc", String.valueOf(id));
-                data.put("id_perwakilan", dataUser.id_perwakilan);
-                data.put("jumlah_kwitansi",editJlhKwitansi.getText().toString());
-                data.put("keterangan",editKeterangan.getText().toString());
-                mPresenter.sellKwitansi(data);
+                if (dataUser != null){
+                    int jlhKwitansi = 0;
+                    if (!editJlhKwitansi.getText().toString().equals( "" ))
+                        jlhKwitansi += Integer.valueOf( editJlhKwitansi.getText().toString() );
+                    if (dataUser.id_perwakilan == null){
+                        Toast.makeText( PSCJualKwitansiActivity.this, "Perwakilan belum didapat, silahkan cek lagi dengan kode perwakilan", Toast.LENGTH_SHORT ).show();
+                    }else if( jlhKwitansi < 1){
+                        Toast.makeText( PSCJualKwitansiActivity.this, "Jumlah Kwitansi Tidak Valid", Toast.LENGTH_SHORT ).show();
+                    }else{
+                        Map<String, String> data = new HashMap<>();
+                        data.put("id_perwakilan_psc", String.valueOf(id));
+                        data.put("id_perwakilan", dataUser.id_perwakilan);
+                        data.put("jumlah_kwitansi",editJlhKwitansi.getText().toString());
+                        data.put("keterangan",editKeterangan.getText().toString());
+                        mPresenter.sellKwitansi(data);
+                    }
+                }else{
+                    Toast.makeText( PSCJualKwitansiActivity.this, "Perwakilan belum didapat, silahkan cek lagi dengan kode perwakilan", Toast.LENGTH_SHORT ).show();
+                }
             }
         });
 

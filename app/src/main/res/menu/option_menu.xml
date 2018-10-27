@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_data_pemberian"
-            android:icon="@null"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="Data Pemberian Kwitansi" />
         <item
             android:id="@+id/nav_beri"

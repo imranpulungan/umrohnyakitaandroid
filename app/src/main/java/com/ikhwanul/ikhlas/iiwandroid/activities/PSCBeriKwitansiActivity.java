@@ -57,12 +57,25 @@ public class PSCBeriKwitansiActivity extends AppActivity implements iPresenterRe
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, String> data = new HashMap<>();
-                data.put("id_perwakilan", String.valueOf(id));
-                data.put("kode_perwakilan", editKodePerwakilan.getText().toString());
-                data.put("jumlah_kwitansi",editJlhKwitansi.getText().toString());
-                data.put("keterangan",editKeterangan.getText().toString());
-                mPresenter.shareKwitansi(data);
+                if (dataUser != null){
+                    int jlhKwitansi = 0;
+                    if (!editJlhKwitansi.getText().toString().equals( "" ))
+                        jlhKwitansi += Integer.valueOf( editJlhKwitansi.getText().toString() );
+                    if (dataUser.id_perwakilan == null){
+                        Toast.makeText( PSCBeriKwitansiActivity.this, "Perwakilan belum didapat, silahkan cek lagi dengan kode perwakilan", Toast.LENGTH_SHORT ).show();
+                    }else if( jlhKwitansi < 1){
+                        Toast.makeText( PSCBeriKwitansiActivity.this, "Jumlah Kwitansi Tidak Valid", Toast.LENGTH_SHORT ).show();
+                    }else{
+                        Map<String, String> data = new HashMap<>();
+                        data.put("id_perwakilan", String.valueOf(id));
+                        data.put("kode_perwakilan", editKodePerwakilan.getText().toString());
+                        data.put("jumlah_kwitansi",editJlhKwitansi.getText().toString());
+                        data.put("keterangan",editKeterangan.getText().toString());
+                        mPresenter.shareKwitansi(data);
+                    }
+                }else{
+                    Toast.makeText( PSCBeriKwitansiActivity.this, "Perwakilan belum didapat, silahkan cek lagi dengan kode perwakilan", Toast.LENGTH_SHORT ).show();
+                }
             }
         });
 
